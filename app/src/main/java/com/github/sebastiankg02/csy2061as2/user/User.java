@@ -73,23 +73,31 @@ public class User {
         public void addUser(User u){
             SQLiteDatabase data = this.getWritableDatabase();
             ContentValues output = new ContentValues();
+
             output.put("NAME", u.fullName);
             output.put("EMAIL", u.email);
             output.put("REGISTERED", formatter.format(u.registeredDate));
+
             if(u.updatedDate != null) {
                 output.put("UPDATED", formatter.format(u.registeredDate));
             }
+
             output.put("PASSWORD", u.password);
+
             if(u.hobbies != null){
                 output.put("HOBBIES", u.hobbies);
             }
+
             output.put("ADDRESS", u.address);
             output.put("LEVEL", u.level.value);
+
             data.insert("user", null, output);
             data.close();
         }
 
-        public void updateUser(User u)
+        public void updateUser(User u){
+
+        }
 
         public ArrayList<User> getUsers(){
             ArrayList<User> output = new ArrayList<User>();
