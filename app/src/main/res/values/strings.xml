@@ -15,4 +15,6 @@
     <string name="button_cancel">Cancel</string>
     <string name="button_clear">Clear</string>
     <string name="button_register">Register!</string>
+    <string name="enter_hobbies">Enter hobbies</string>
+    <string name="reset_pw">Reset Password</string>
 </resources>

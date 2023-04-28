@@ -79,7 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:orientation="vertical"
-        android:layout_margin="@dimen/global_margin">
+        android:layout_margin="@dimen/title_margin">
 
         <Button
             android:id="@+id/registerUserButton"

@@ -58,14 +58,14 @@
             android:text="@string/login"/>
 
         <Button
-            android:id="@+id/forgotButton"
+            android:id="@+id/registerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/button_margin"
             android:text="@string/register"/>
 
         <Button
-            android:id="@+id/registerButton"
+            android:id="@+id/forgotButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/button_margin"
