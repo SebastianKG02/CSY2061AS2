@@ -45,6 +45,9 @@
         android:name="com.github.sebastiankg02.csy2061as2.fragments.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" >
+        <argument
+            android:name="ShowAppBar"
+            android:defaultValue="true" />
         <action
             android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment"
