@@ -24,54 +24,68 @@
             android:textStyle="bold"
             android:layout_margin="@dimen/title_margin"
             android:textSize="@dimen/text_title"/>
-        <TextView
-            android:id="@+id/registerHeadingText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/register_text"
-            android:textAlignment="center"
-            android:textStyle="italic"
-            android:textSize="@dimen/text_heading"/>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/registerUsernameEnter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_username"
             android:layout_margin="@dimen/button_margin"
             android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/registerFullNameEnter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_name"
             android:layout_margin="@dimen/button_margin"
             android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true">
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/registerPasswordEnter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_password"
             android:layout_margin="@dimen/button_margin"
             android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true">
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/registerPasswordConfirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/confirm_password"
             android:layout_margin="@dimen/button_margin"
             android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/registerAddressEnter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_address"
             android:layout_margin="@dimen/button_margin"
             android:inputType="textPostalAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/registerUserButton"

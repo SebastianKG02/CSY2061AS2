@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/loginFragment"
+        android:icon="@android:drawable/ic_secure"
+        android:title="@string/login"/>
+    <item
+        android:id="@+id/forgotPasswordFragment"
+        android:icon="@android:drawable/ic_dialog_alert"
+        android:title="@string/forgot_pw" />
+    <item
+        android:id="@+id/registerFragment"
+        android:icon="@android:drawable/btn_plus"
+        android:title="@string/register_new"/>
+</menu>

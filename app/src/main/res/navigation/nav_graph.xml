@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.github.sebastiankg02.csy2061as2.fragments.LoginFragment"
-        android:label="Login"
+        android:label="@string/login"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
@@ -24,12 +24,19 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_loginFragment_to_basketFragment"
+            app:destination="@id/basketFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.github.sebastiankg02.csy2061as2.fragments.RegisterFragment"
-        android:label="fragment_register"
+        android:label="@string/register_new"
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
@@ -43,7 +50,7 @@
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.github.sebastiankg02.csy2061as2.fragments.ForgotPasswordFragment"
-        android:label="fragment_forgot_password"
+        android:label="@string/forgot_pw"
         tools:layout="@layout/fragment_forgot_password" >
         <argument
             android:name="ShowAppBar"
@@ -55,5 +62,18 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/basketFragment"
+        android:name="com.github.sebastiankg02.csy2061as2.fragments.BasketFragment"
+        android:label="@string/basket_title"
+        tools:layout="@layout/fragment_basket" >
+        <action
+            android:id="@+id/action_basketFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 </navigation>

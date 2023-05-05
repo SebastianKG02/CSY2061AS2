@@ -7,8 +7,9 @@
     <string name="enter_password">Enter password</string>
     <string name="confirm_password">Confirm password</string>
     <string name="login">Log In</string>
-    <string name="forgot_pw">Forgot Password?</string>
+    <string name="forgot_pw">Forgot Password</string>
     <string name="register">No Account? Register here!</string>
+    <string name="register_new">Register</string>
     <string name="register_text">New User Registration</string>
     <string name="enter_name">Enter full name</string>
     <string name="enter_address">Enter Billing &amp; Shipping address</string>
@@ -19,4 +20,26 @@
     <string name="reset_pw">Reset Password</string>
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Closed</string>
+    <string name="register_username_empty">Your username (email) cannot be empty!</string>
+    <string name="register_fullname_empty">Your full name cannot be empty!</string>
+    <string name="register_password_empty">Please enter a password!</string>
+    <string name="register_password2_empty">Please confirm your password!</string>
+    <string name="register_password_no_match">Your passwords must match!</string>
+    <string name="register_password_req_wrong">Your password is not strong enough! It should contain at least 8 characters, an uppercase character, a lowercase character, as well as a number.</string>
+    <string name="register_address_empty">Please enter your address!</string>
+    <string name="unknown_error">An unknown error has occurred. Please report this bug!</string>
+    <string name="register_password_min_chars">You need at least 8 characters in your password!</string>
+    <string name="register_password_uppercase">You need at least 1 uppercase character in your password!</string>
+    <string name="register_password_lowercase">You need at least 1 lowercase character in your password!</string>
+    <string name="register_password_no_number">You need at least 1 number in your password!</string>
+    <string name="register_user_exists">Username (email) already registered!</string>
+    <string name="register_user_success">User successfully registered!</string>
+    <string name="forgot_pw_no_user">User not found! Have you entered your username correctly?</string>
+    <string name="forgot_pw_wrong_details">Incorrect details provided. Please try again!</string>
+    <string name="forgot_pw_success">Password reset successfully.</string>
+    <string name="basket_title">Your Basket</string>
+    <string name="password_wrong">Incorrect password.</string>
+    <string name="logout_message">Are you sure you want to log out?</string>
+    <string name="logout">Log Out</string>
+    <string name="logout_no_user">You aren\'t logged in!</string>
 </resources>

@@ -49,7 +49,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/component_margin"
             android:hint="@string/enter_password"
-            android:ems="10"
             android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 

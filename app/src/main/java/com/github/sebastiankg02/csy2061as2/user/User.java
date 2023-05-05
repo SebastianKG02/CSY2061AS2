@@ -13,15 +13,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class User {
-    private int id;
-    private String fullName;
-    private String email;
-    private LocalDateTime registeredDate;
-    private LocalDateTime updatedDate;
-    private String password;
-    private String hobbies;
-    private String address;
-    private UserAccessLevel level;
+    public static final char[] passwordChars = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    public static final char[] passwordNumbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    public static final int passwordMinChars = 8;
+
+    public int id;
+    public String fullName;
+    public String email;
+    public LocalDateTime registeredDate;
+    public LocalDateTime updatedDate;
+    public String password;
+    public String hobbies;
+    public String address;
+    public UserAccessLevel level;
 
     public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
@@ -41,15 +45,27 @@ public class User {
         this.id = id;
         this.fullName = name;
         this.email = email;
-        this.registeredDate = (LocalDateTime) formatter.parse(registered);
-        this.updatedDate = (LocalDateTime) formatter.parse(updated);
+        this.registeredDate = LocalDateTime.parse(registered, formatter);
+        this.updatedDate = LocalDateTime.parse(updated, formatter);
         this.password = password;
         this.hobbies = hobbies;
         this.address = address;
         this.level = UserAccessLevel.getLevelFromInt(level);
     }
 
-    public class DBHelper extends SQLiteOpenHelper {
+    public User(int id, String name, String email, LocalDateTime registered, LocalDateTime updated, String password, String address){
+        this.id = id;
+        this.fullName = name;
+        this.email = email;
+        this.registeredDate = registered;
+        this.updatedDate = updated;
+        this.password = password;
+        this.hobbies = "";
+        this.address = address;
+        this.level = UserAccessLevel.getLevelFromInt(0);
+    }
+
+    public static class DBHelper extends SQLiteOpenHelper {
 
         public DBHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
@@ -70,7 +86,13 @@ public class User {
                     "LEVEL INT NOT NULL)");
         }
 
-        public void addUser(User u){
+        public boolean addUser(User u){
+            for(User o: getUsers()){
+                if(o.email.equals(u.email)){
+                    return false;
+                }
+            }
+
             SQLiteDatabase data = this.getWritableDatabase();
             ContentValues output = new ContentValues();
 
@@ -78,13 +100,13 @@ public class User {
             output.put("EMAIL", u.email);
             output.put("REGISTERED", formatter.format(u.registeredDate));
 
-            if(u.updatedDate != null) {
+            if (u.updatedDate != null) {
                 output.put("UPDATED", formatter.format(u.registeredDate));
             }
 
             output.put("PASSWORD", u.password);
 
-            if(u.hobbies != null){
+            if (u.hobbies != null) {
                 output.put("HOBBIES", u.hobbies);
             }
 
@@ -93,10 +115,19 @@ public class User {
 
             data.insert("user", null, output);
             data.close();
+            return true;
         }
 
-        public void updateUser(User u){
-
+        public void updateUser(User newUser, String username){
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues cv = new ContentValues();
+            cv.put("NAME", newUser.fullName);
+            cv.put("UPDATED", formatter.format(LocalDateTime.now()));
+            cv.put("PASSWORD", newUser.password);
+            cv.put("HOBBIES", newUser.hobbies);
+            cv.put("ADDRESS", newUser.address);
+            db.update("user", cv, "EMAIL = ?", new String[]{username});
+            db.close();
         }
 
         public ArrayList<User> getUsers(){
