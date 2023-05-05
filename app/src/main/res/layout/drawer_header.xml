@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawerHeaderLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/purple_200"
+    android:layout_marginBottom="@dimen/button_margin">
+
+    <ImageView
+        android:id="@+id/userImageSection"
+        android:layout_width="match_parent"
+        android:padding="@dimen/title_margin"
+        android:layout_margin="@dimen/button_margin"
+        android:layout_height="150dp"
+        android:outlineAmbientShadowColor="@color/black"
+        android:src="@mipmap/ic_launcher"/>
+    <TextView
+        android:id="@+id/userDrawerNameSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:paddingBottom="@dimen/button_margin"
+        app:layout_constraintTop_toBottomOf="@+id/userImageSection"
+        android:text="Welcome, USER"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
