@@ -4,7 +4,12 @@
     tools:showIn="navigation_view">
 
     <item
-        android:id="@+id/forgotPasswordFragment"
-        android:icon="@android:drawable/ic_dialog_alert"
-        android:title="your mum" />
+        android:id="@+id/basketFragment"
+        android:icon="@drawable/basket"
+        android:title="@string/basket_title" />
+
+    <item
+        android:id="@+id/viewCategoriesFragment"
+        android:icon="@drawable/shop"
+        android:title="@string/browse" />
 </menu>

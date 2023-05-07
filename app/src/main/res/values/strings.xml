@@ -42,4 +42,6 @@
     <string name="logout_message">Are you sure you want to log out?</string>
     <string name="logout">Log Out</string>
     <string name="logout_no_user">You aren\'t logged in!</string>
+    <string name="category_select">Browsing all categories</string>
+    <string name="browse">Browse</string>
 </resources>

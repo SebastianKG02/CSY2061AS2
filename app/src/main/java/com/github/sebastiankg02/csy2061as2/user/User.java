@@ -135,7 +135,7 @@ public class User {
             SQLiteDatabase db = this.getReadableDatabase();
             Cursor c = db.rawQuery("SELECT * FROM user", null);
             c.moveToFirst();
-            while(c.isAfterLast() == false){
+            while(!c.isAfterLast()){
                 int id = c.getInt(c.getColumnIndexOrThrow("ID"));
                 String name = c.getString(c.getColumnIndexOrThrow("NAME"));
                 String email = c.getString(c.getColumnIndexOrThrow("EMAIL"));
@@ -151,6 +151,7 @@ public class User {
                 c.moveToNext();
             }
 
+            c.close();
             db.close();
             return output;
         }

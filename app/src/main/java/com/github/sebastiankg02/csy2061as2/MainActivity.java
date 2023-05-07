@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfig;
     private ActionBarDrawerToggle toggle;
     public static NavigationView navView;
-    private LinearLayout navLayout;
     public static NavController globalNavigation;
     public static User currentLoggedInUser;
 
@@ -87,19 +86,19 @@ public class MainActivity extends AppCompatActivity {
             if(!lastEmail.isEmpty()){
                 for(User u: userHelper.getUsers()){
                     if(u.email.equals(lastEmail)){
+                        navView.inflateMenu(R.menu.drawer);
                         currentLoggedInUser = u;
                         globalNavigation.navigate(R.id.basketFragment);
+                        TextView header = (TextView)navView.getHeaderView(0).findViewById(R.id.userDrawerNameSection);
+                        header.setText("Welcome, " + u.fullName);
                     }
                 }
             } else {
                 SharedPreferences.Editor prefEditor = prefs.edit();
                 prefEditor.putBoolean("isLoggedIn", false);
                 prefEditor.apply();
+                navView.inflateMenu(R.menu.drawer_login);
             }
-        }
-
-        if(hasLoggedIn){
-            navView.inflateMenu(R.menu.drawer);
         } else {
             navView.inflateMenu(R.menu.drawer_login);
         }
