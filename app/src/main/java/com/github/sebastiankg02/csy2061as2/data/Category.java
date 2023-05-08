@@ -43,7 +43,6 @@ public class Category {
         this.mainCategory = mainCategory;
     }
 
-
     public static class DBHelper extends SQLiteOpenHelper {
         public DBHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
@@ -54,6 +53,13 @@ public class Category {
             sqLiteDatabase.execSQL("CREATE TABLE category(" +
                     "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "MAIN TEXT NOT NULL)");
+        }
+
+        public void initDefaultCategories(){
+            addCategory(new Category("Tech"));
+            addCategory(new Category("Food"));
+            addCategory(new Category("Household"));
+            addCategory(new Category("Furniture"));
         }
 
         public boolean addCategory(Category c){
@@ -89,10 +95,10 @@ public class Category {
             return output;
         }
 
-        public Category getSpecificCategory(String main){
+        public Category getSpecificCategory(int id){
             Category output = new Category();
             SQLiteDatabase db = this.getReadableDatabase();
-            Cursor c = db.rawQuery("SELECT * FROM category WHERE MAIN = ?", new String[]{main});
+            Cursor c = db.rawQuery("SELECT * FROM category WHERE ID = ?", new String[]{String.valueOf(id)});
             c.moveToFirst();
             while(!c.isAfterLast()){
                 output.id = c.getInt(c.getColumnIndexOrThrow("ID"));

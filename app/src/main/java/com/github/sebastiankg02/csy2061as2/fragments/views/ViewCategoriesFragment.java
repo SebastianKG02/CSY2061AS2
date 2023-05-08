@@ -19,7 +19,7 @@ import com.github.sebastiankg02.csy2061as2.data.adapters.CategoryAdapter;
 public class ViewCategoriesFragment extends Fragment {
 
     public static int currentCategoryID = -1;
-    public static boolean isSubCategory = false;
+    public static String currentCategoryTitle;
 
     private View masterView;
     private RecyclerView recycler;
@@ -39,10 +39,7 @@ public class ViewCategoriesFragment extends Fragment {
         currentCategoryText = (TextView) masterView.findViewById(R.id.categoryTitleText);
 
         Category.DBHelper catHelper = new Category.DBHelper(getContext(), "Category", null, 1);
-        catHelper.addCategory(new Category("Tech"));
-        catHelper.addCategory(new Category("Food"));
-        catHelper.addCategory(new Category("Household"));
-        catHelper.addCategory(new Category("Furniture"));
+        catHelper.initDefaultCategories();
         adapter = new CategoryAdapter(catHelper.getCategories());
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));

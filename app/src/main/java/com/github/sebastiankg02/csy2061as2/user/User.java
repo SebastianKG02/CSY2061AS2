@@ -165,6 +165,12 @@ public class User {
             return null;
         }
 
+        public void deleteUser(String email){
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.delete("user", "EMAIL = ?", new String[]{email});
+            db.close();
+        }
+
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS user");

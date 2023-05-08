@@ -10,8 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.sebastiankg02.csy2061as2.MainActivity;
 import com.github.sebastiankg02.csy2061as2.R;
 import com.github.sebastiankg02.csy2061as2.data.Category;
+import com.github.sebastiankg02.csy2061as2.fragments.views.ViewCategoriesFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -41,6 +43,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ViewCategoriesFragment.currentCategoryID = currentCategory.getId();
+                ViewCategoriesFragment.currentCategoryTitle = currentCategory.getMainCategory();
+                MainActivity.globalNavigation.navigate(R.id.viewProductListFragment);
                 Snackbar.make(holder.itemLayout, "GOTO CATEGORY " + currentCategory.getMainCategory(), Snackbar.LENGTH_SHORT).show();
             }
         });

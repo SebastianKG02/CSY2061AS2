@@ -43,5 +43,6 @@
     <string name="logout">Log Out</string>
     <string name="logout_no_user">You aren\'t logged in!</string>
     <string name="category_select">Browsing all categories</string>
-    <string name="browse">Browse</string>
+    <string name="browse">Browse Categories</string>
+    <string name="browse_products">Browse Products</string>
 </resources>

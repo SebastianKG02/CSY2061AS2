@@ -1,10 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/productItemLayout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/productItemLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_margin="@dimen/global_margin"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="@drawable/item_category_border"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/button_margin"
+    android:padding="@dimen/recycler_padding">
 
+    <TextView
+        android:id="@+id/productMainText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/text_padding_recycler"
+        android:text="PRODUCT NAME GOES HERE"
+        android:textAlignment="textStart"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_general"/>
 
+    <TextView
+        android:id="@+id/productDescText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/text_padding_recycler"
+        android:text="PRODUCT DESCRIPTION GOES HERE"
+        android:textAlignment="textStart"
+        android:textStyle="italic"
+        android:textSize="@dimen/text_sub"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/productStockText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/text_padding_recycler"
+            android:text="STOCK LEVEL GOES HERE"
+            android:textAlignment="textStart"
+            android:layout_weight="0.5"
+            android:textSize="@dimen/text_sub"/>
+
+        <TextView
+            android:id="@+id/productPriceText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/text_padding_recycler"
+            android:text="PRICE GOES  HERE"
+            android:layout_weight="0.5"
+            android:textAlignment="textEnd"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_sub"/>
+    </LinearLayout>
 </LinearLayout>
