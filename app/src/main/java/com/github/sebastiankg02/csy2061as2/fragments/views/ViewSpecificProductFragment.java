@@ -3,64 +3,137 @@ package com.github.sebastiankg02.csy2061as2.fragments.views;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.github.sebastiankg02.csy2061as2.MainActivity;
 import com.github.sebastiankg02.csy2061as2.R;
+import com.google.android.material.snackbar.Snackbar;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ViewSpecificProductFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.w3c.dom.Text;
+
+import java.text.DecimalFormat;
+
 public class ViewSpecificProductFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private View masterView;
+    private TextView categoryText;
+    private TextView productNameText;
+    private TextView productDescText;
+    private TextView priceText;
+    private TextView stockText;
+    private TextView quantityText;
+    private ImageButton decButton;
+    private ImageButton incButton;
+    private TextView totalPriceText;
+    private Button addToBasketButton;
+    private Button backButton;
+    private Button adminButton;
 
     public ViewSpecificProductFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ViewSpecificProductFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ViewSpecificProductFragment newInstance(String param1, String param2) {
-        ViewSpecificProductFragment fragment = new ViewSpecificProductFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        super(R.layout.fragment_view_product);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onViewCreated(View v, Bundle b) {
+        super.onViewCreated(v,b);
+
+        categoryText = (TextView) masterView.findViewById(R.id.viewSpecProductCategoryText);
+        productNameText = (TextView) masterView.findViewById(R.id.viewSpecProductTitleText);
+        productDescText = (TextView) masterView.findViewById(R.id.viewSpecProductDescText);
+        priceText = (TextView) masterView.findViewById(R.id.viewSpecProductPriceText);
+        stockText = (TextView) masterView.findViewById(R.id.viewSpecProductStockText);
+        quantityText = (TextView) masterView.findViewById(R.id.addToBasketQuantityText);
+        decButton = (ImageButton) masterView.findViewById(R.id.addToBasketDecProdCountButton);
+        incButton = (ImageButton) masterView.findViewById(R.id.addToBasketIncProdCountButton);
+        addToBasketButton = (Button) masterView.findViewById(R.id.viewSpecProductOrderButton);
+        backButton = (Button) masterView.findViewById(R.id.viewSpecProductBackButton);
+        adminButton = (Button) masterView.findViewById(R.id.viewSpecProductAdminButton);
+        totalPriceText = (TextView) masterView.findViewById(R.id.viewSpecProductTotalPriceAmountText);
+
+        categoryText.setText(ViewCategoriesFragment.currentCategoryTitle);
+        productNameText.setText(ViewProductListFragment.currentProductViewing.getName());
+        productDescText.setText(ViewProductListFragment.currentProductViewing.getDesc());
+        priceText.setText("£"+new DecimalFormat("#.0#").format(ViewProductListFragment.currentProductViewing.getPrice())+" per unit");
+
+        boolean hasStock = true;
+        if(ViewProductListFragment.currentProductViewing.getStockLevel() <= 0){
+            hasStock = false;
+            stockText.setTextColor(getContext().getColor(R.color.red));
+            stockText.setText(R.string.out_of_stock);
+        } else {
+            stockText.setText(String.valueOf(ViewProductListFragment.currentProductViewing.getStockLevel()) + " in stock.");
         }
+
+        addToBasketButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(masterView, "ADD TO BASKET TBC.", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ViewProductListFragment.currentProductViewing = null;
+                MainActivity.globalNavigation.popBackStack();
+            }
+        });
+
+        if(MainActivity.currentLoggedInUser.level.value != 1){
+            adminButton.setEnabled(false);
+            adminButton.setVisibility(View.INVISIBLE);
+        } else {
+            adminButton.setEnabled(true);
+            adminButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(masterView, "ADMIN BUTTON TBC", Snackbar.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        incButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int quantity = Integer.valueOf(quantityText.getText().toString());
+
+                if(quantity < ViewProductListFragment.currentProductViewing.getStockLevel()) {
+                    quantityText.setText(String.valueOf(quantity + 1));
+                    updateTotalPrice(quantity + 1);
+                }
+            }
+        });
+
+        decButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int quantity = Integer.valueOf(quantityText.getText().toString());
+
+                if(quantity-1 > 0){
+                    quantityText.setText(String.valueOf(quantity-1));
+                    updateTotalPrice(quantity - 1);
+                }
+            }
+        });
+        updateTotalPrice(Integer.valueOf(quantityText.getText().toString()));
+    }
+
+    public void updateTotalPrice(int quantity){
+        totalPriceText.setText("£"+new DecimalFormat("#.0#").format((float) quantity * ViewProductListFragment.currentProductViewing.getPrice()));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_product, container, false);
+        masterView = inflater.inflate(R.layout.fragment_view_product, container, false);
+        return masterView;
     }
 }

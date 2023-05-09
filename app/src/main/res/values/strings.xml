@@ -45,4 +45,11 @@
     <string name="category_select">Browsing all categories</string>
     <string name="browse">Browse Categories</string>
     <string name="browse_products">Browse Products</string>
+    <string name="addToBasket">Add To Basket</string>
+    <string name="quantity">Quantity</string>
+    <string name="cat_back">Back to Category Product List</string>
+    <string name="admin_edit_product">[ADMIN] Edit Product</string>
+    <string name="out_of_stock">Out of stock! Check back soon!</string>
+    <string name="view_product">View Product</string>
+    <string name="total_price">Total Price:</string>
 </resources>

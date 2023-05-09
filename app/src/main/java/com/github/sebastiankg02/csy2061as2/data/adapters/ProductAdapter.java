@@ -1,19 +1,25 @@
 package com.github.sebastiankg02.csy2061as2.data.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.sebastiankg02.csy2061as2.MainActivity;
 import com.github.sebastiankg02.csy2061as2.R;
 import com.github.sebastiankg02.csy2061as2.data.Product;
 import com.github.sebastiankg02.csy2061as2.fragments.views.ViewCategoriesFragment;
+import com.github.sebastiankg02.csy2061as2.fragments.views.ViewProductListFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DecimalFormat;
@@ -23,15 +29,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     public ArrayList<Product> products;
     private Context context;
+    private Activity activity;
 
-    public ProductAdapter(ArrayList<Product> prods, Context c){
+    public ProductAdapter(ArrayList<Product> prods, Context c, Activity a){
         this.products = prods;
         this.context = c;
-
-        Log.i("PRODUCT", "Category is: " + ViewCategoriesFragment.currentCategoryID);
-        for(Product p: prods){
-            Log.i("PRODUCT", "Loading product: " + p.getName() + " from category " + p.getCategory());
-        }
+        this.activity = a;
     }
 
     @NonNull
@@ -55,7 +58,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         Log.i("STOCK", currentProduct.getName() + " has stock of: " + String.valueOf(currentProduct.getStockLevel()));
         if(currentProduct.getStockLevel() <= 0){
-            holder.stockText.setText("Out of stock!");
+            holder.stockText.setText(R.string.out_of_stock);
             holder.stockText.setTextColor(context.getColor(R.color.red));
         } else {
             holder.stockText.setTextColor(context.getColor(R.color.black));
@@ -65,6 +68,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Snackbar.make(holder.itemLayout, "GOTO PRODUCT " + currentProduct.getName(), Snackbar.LENGTH_SHORT).show();
+                PopupMenu popup = new PopupMenu(context, view);
+                popup.getMenuInflater().inflate(R.menu.product_click, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch(menuItem.getItemId()){
+                            case R.id.viewProductPageOption:
+                                ViewProductListFragment.currentProductViewing = currentProduct;
+                                Navigation.findNavController(view).navigate(R.id.action_viewProductListFragment_to_viewSpecificProductFragment);
+                                return true;
+                            case R.id.addToBasketOption:
+                                Snackbar.make(view, "GOTO ADD TO BASKET DIALOG", Snackbar.LENGTH_SHORT).show();
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+                popup.show();
             }
         });
     }

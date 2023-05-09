@@ -8,11 +8,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.sebastiankg02.csy2061as2.MainActivity;
 import com.github.sebastiankg02.csy2061as2.R;
 import com.github.sebastiankg02.csy2061as2.data.Category;
+import com.github.sebastiankg02.csy2061as2.data.Product;
 import com.github.sebastiankg02.csy2061as2.fragments.views.ViewCategoriesFragment;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -21,9 +23,11 @@ import java.util.ArrayList;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>{
 
     public ArrayList<Category> categories;
+    private Context context;
 
-    public CategoryAdapter(ArrayList<Category> cats){
+    public CategoryAdapter(ArrayList<Category> cats, Context c){
         this.categories = cats;
+        this.context = c;
     }
 
     @NonNull
@@ -40,13 +44,26 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         Category currentCategory = categories.get(position);
         holder.mainText.setText(currentCategory.getMainCategory());
 
+        Product.DBHelper prodHelper = new Product.DBHelper(context, "Product", null, 1);
+        int numberOfProducts = prodHelper.getAllProductsInCategory(currentCategory.getId()).size();
+
+        if(numberOfProducts > 1){
+            holder.subText.setText(String.valueOf(numberOfProducts) + " products available.");
+        } else if (numberOfProducts == 1){
+            holder.subText.setText(String.valueOf(numberOfProducts) + " product available.");
+        } else {
+            holder.subText.setText("No products available yet!");
+            holder.subText.setTextColor(context.getColor(R.color.red));
+        }
+
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ViewCategoriesFragment.currentCategoryID = currentCategory.getId();
-                ViewCategoriesFragment.currentCategoryTitle = currentCategory.getMainCategory();
-                MainActivity.globalNavigation.navigate(R.id.viewProductListFragment);
-                Snackbar.make(holder.itemLayout, "GOTO CATEGORY " + currentCategory.getMainCategory(), Snackbar.LENGTH_SHORT).show();
+                if(numberOfProducts > 0) {
+                    ViewCategoriesFragment.currentCategoryID = currentCategory.getId();
+                    ViewCategoriesFragment.currentCategoryTitle = currentCategory.getMainCategory();
+                    Navigation.findNavController(view).navigate(R.id.action_viewCategoriesFragment_to_viewProductListFragment);
+                }
             }
         });
     }

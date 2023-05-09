@@ -22,6 +22,7 @@ public class ViewProductListFragment extends Fragment {
     private RecyclerView recycler;
     private TextView currentCategoryHeader;
     public static ProductAdapter adapter;
+    public static Product currentProductViewing;
 
     public ViewProductListFragment() {
         super(R.layout.fragment_view_product_list);
@@ -37,7 +38,7 @@ public class ViewProductListFragment extends Fragment {
 
         Product.DBHelper productHelper = new Product.DBHelper(getContext(), "Product", null, 1);
         productHelper.initDefaultProducts();
-        adapter = new ProductAdapter(productHelper.getAllProductsInCategory(ViewCategoriesFragment.currentCategoryID), getContext());
+        adapter = new ProductAdapter(productHelper.getAllProductsInCategory(ViewCategoriesFragment.currentCategoryID), getContext(), getActivity());
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recycler.setAdapter(adapter);

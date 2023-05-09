@@ -40,7 +40,7 @@ public class ViewCategoriesFragment extends Fragment {
 
         Category.DBHelper catHelper = new Category.DBHelper(getContext(), "Category", null, 1);
         catHelper.initDefaultCategories();
-        adapter = new CategoryAdapter(catHelper.getCategories());
+        adapter = new CategoryAdapter(catHelper.getCategories(), getContext());
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recycler.setAdapter(adapter);
