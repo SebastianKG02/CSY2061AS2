@@ -61,4 +61,6 @@
     <string name="basket_remove">Remove from Basket</string>
     <string name="basket_remove_desc">Are you sure you want to remove this item from your basket?</string>
     <string name="basket_empty">Your basket is empty!</string>
+    <string name="user_profile">Your Profile</string>
+    <string name="user_orders">Your Orders</string>
 </resources>

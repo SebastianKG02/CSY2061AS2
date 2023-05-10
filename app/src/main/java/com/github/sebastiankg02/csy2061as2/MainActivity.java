@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     if(u.email.equals(lastEmail)){
                         navView.inflateMenu(R.menu.drawer);
                         currentLoggedInUser = u;
-                        globalNavigation.navigate(R.id.basketFragment);
+                        globalNavigation.navigate(R.id.action_loginFragment_to_basketFragment);
                         TextView header = (TextView)navView.getHeaderView(0).findViewById(R.id.userDrawerNameSection);
                         header.setText("Welcome, " + u.fullName);
                     }
@@ -149,7 +149,9 @@ public class MainActivity extends AppCompatActivity {
                                     hasLoggedIn = false;
                                     ((TextView)navView.findViewById(R.id.userDrawerNameSection)).setText(R.string.app_title);
                                     changeDrawer(R.menu.drawer_login);
+                                    globalNavigation.popBackStack(R.id.basketFragment, true);
                                     globalNavigation.navigate(R.id.loginFragment);
+
                                 }
                             })
                             .setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {

@@ -48,4 +48,8 @@ public class Basket {
     public static void setContents(HashMap<Integer, Integer> contents) {
         Basket.contents = contents;
     }
+
+    public static void emptyBasket(){
+        contents.clear();
+    }
 }

@@ -29,6 +29,8 @@
             app:destination="@id/basketFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/nav_host"
+            app:popUpToInclusive="true"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
@@ -74,7 +76,9 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/nav_host"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_basketFragment_to_viewCategoriesFragment"
             app:destination="@id/viewCategoriesFragment"
@@ -82,6 +86,12 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action
+            android:id="@+id/action_basketFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+        <action
+            android:id="@+id/action_basketFragment_to_viewOrderListFragment"
+            app:destination="@id/viewOrderListFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewCategoriesFragment"
@@ -109,6 +119,12 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action
+            android:id="@+id/action_viewCategoriesFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+        <action
+            android:id="@+id/action_viewCategoriesFragment_to_viewOrderListFragment"
+            app:destination="@id/viewOrderListFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewProductListFragment"
@@ -129,6 +145,15 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action
+            android:id="@+id/action_viewProductListFragment_to_basketFragment"
+            app:destination="@id/basketFragment" />
+        <action
+            android:id="@+id/action_viewProductListFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+        <action
+            android:id="@+id/action_viewProductListFragment_to_viewOrderListFragment"
+            app:destination="@id/viewOrderListFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewSpecificProductFragment"
@@ -142,5 +167,44 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action
+            android:id="@+id/action_viewSpecificProductFragment_to_basketFragment"
+            app:destination="@id/basketFragment" />
+        <action
+            android:id="@+id/action_viewSpecificProductFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+        <action
+            android:id="@+id/action_viewSpecificProductFragment_to_viewOrderListFragment"
+            app:destination="@id/viewOrderListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.github.sebastiankg02.csy2061as2.fragments.UserProfileFragment"
+        android:label="fragment_user_profile"
+        tools:layout="@layout/fragment_user_profile" >
+        <action
+            android:id="@+id/action_userProfileFragment_to_viewOrderListFragment"
+            app:destination="@id/viewOrderListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewOrderListFragment"
+        android:name="com.github.sebastiankg02.csy2061as2.fragments.views.ViewOrderListFragment"
+        android:label="fragment_view_order_list"
+        tools:layout="@layout/fragment_view_order_list" >
+        <action
+            android:id="@+id/action_viewOrderListFragment_to_viewSpecificOrderFragment"
+            app:destination="@id/viewSpecificOrderFragment" />
+        <action
+            android:id="@+id/action_viewOrderListFragment_to_basketFragment"
+            app:destination="@id/basketFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewSpecificOrderFragment"
+        android:name="com.github.sebastiankg02.csy2061as2.fragments.views.ViewSpecificOrderFragment"
+        android:label="fragment_view_specific_order"
+        tools:layout="@layout/fragment_view_specific_order" >
+        <action
+            android:id="@+id/action_viewSpecificOrderFragment_to_viewOrderListFragment"
+            app:destination="@id/viewOrderListFragment" />
     </fragment>
 </navigation>

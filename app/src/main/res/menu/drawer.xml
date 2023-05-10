@@ -4,6 +4,16 @@
     tools:showIn="navigation_view">
 
     <item
+        android:id="@+id/userProfileFragment"
+        android:icon="@drawable/profile_manage"
+        android:title="@string/user_profile"/>
+
+    <item
+        android:id="@+id/viewOrderListFragment"
+        android:icon="@drawable/order_icon"
+        android:title="@string/user_orders"/>
+
+    <item
         android:id="@+id/basketFragment"
         android:icon="@drawable/basket"
         android:title="@string/basket_title" />

@@ -19,6 +19,7 @@ import com.github.sebastiankg02.csy2061as2.R;
 import com.github.sebastiankg02.csy2061as2.data.Basket;
 import com.github.sebastiankg02.csy2061as2.data.Product;
 import com.github.sebastiankg02.csy2061as2.fragments.BasketFragment;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.DecimalFormat;
 
@@ -66,25 +67,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
                     Basket.removeFromBasket(basketProduct, 1);
                     BasketFragment.calculateTotalPrice(context);
                 } else {
-                    AlertDialog removeDialog = new AlertDialog.Builder(context)
-                            .setTitle(R.string.basket_remove)
-                            .setMessage(R.string.basket_remove_desc)
-                            .setPositiveButton(R.string.basket_remove, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss();
-                                    Basket.removeFromBasket(basketProduct);
-                                    notifyItemRemoved(holder.getAdapterPosition());
-                                    BasketFragment.calculateTotalPrice(context);
-                                }
-                            })
-                            .setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.cancel();
-                                }
-                            }).create();
-                    removeDialog.show();
+                    removeItem(basketProduct, holder);
                 }
             }
         });
@@ -101,6 +84,35 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
                 }
             }
         });
+
+        holder.removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeItem(basketProduct, holder);
+            }
+        });
+    }
+
+    private void removeItem(Product basketProduct, ViewHolder holder){
+        AlertDialog removeDialog = new AlertDialog.Builder(context)
+                .setTitle(R.string.basket_remove)
+                .setMessage(R.string.basket_remove_desc)
+                .setPositiveButton(R.string.basket_remove, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        Basket.removeFromBasket(basketProduct);
+                        notifyItemRemoved(holder.getAdapterPosition());
+                        BasketFragment.calculateTotalPrice(context);
+                    }
+                })
+                .setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                }).create();
+        removeDialog.show();
     }
 
     private void updateTotalPrice(ViewHolder holder, float price, int newQuantity){
@@ -117,7 +129,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
         public TextView productName;
         public TextView productPricePer;
         public ImageButton decQuantityButton;
-        public EditText quantity;
+        public TextInputEditText quantity;
         public ImageButton incQuantityButton;
         public TextView totalPrice;
         public Button removeButton;
@@ -128,7 +140,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
             this.productName = (TextView) itemView.findViewById(R.id.basketProductName);
             this.productPricePer = (TextView) itemView.findViewById(R.id.basketPricePerProduct);
             this.decQuantityButton = (ImageButton) itemView.findViewById(R.id.basketDecQuantityButton);
-            this.quantity = (EditText) itemView.findViewById(R.id.basketQuantityText);
+            this.quantity = (TextInputEditText) itemView.findViewById(R.id.basketQuantityText);
             this.incQuantityButton = (ImageButton) itemView.findViewById(R.id.basketIncQuantityButton);
             this.totalPrice = (TextView) itemView.findViewById(R.id.basketProductTotalPriceText);
             this.removeButton = (Button) itemView.findViewById(R.id.basketRemoveItemButton);

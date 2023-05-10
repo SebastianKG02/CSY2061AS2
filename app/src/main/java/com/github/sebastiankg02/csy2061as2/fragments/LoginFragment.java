@@ -79,7 +79,7 @@ public class LoginFragment extends Fragment {
                                 MainActivity.changeDrawer(R.menu.drawer);
                                 MainActivity.hasLoggedIn = true;
                                 ((TextView)MainActivity.navView.findViewById(R.id.userDrawerNameSection)).setText("Welcome, " + u.fullName);
-                                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_basketFragment);
+                                MainActivity.globalNavigation.navigate(R.id.action_loginFragment_to_basketFragment);
                             } else {
                                 Snackbar.make(masterLayout, R.string.password_wrong, Snackbar.LENGTH_SHORT).show();
                             }
