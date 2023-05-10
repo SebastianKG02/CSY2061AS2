@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 
 import com.github.sebastiankg02.csy2061as2.user.User;
 
-import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 

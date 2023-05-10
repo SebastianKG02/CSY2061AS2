@@ -15,10 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.github.sebastiankg02.csy2061as2.MainActivity;
 import com.github.sebastiankg02.csy2061as2.R;
 import com.github.sebastiankg02.csy2061as2.data.Product;
-import com.github.sebastiankg02.csy2061as2.fragments.views.ViewCategoriesFragment;
 import com.github.sebastiankg02.csy2061as2.fragments.views.ViewProductListFragment;
 import com.google.android.material.snackbar.Snackbar;
 

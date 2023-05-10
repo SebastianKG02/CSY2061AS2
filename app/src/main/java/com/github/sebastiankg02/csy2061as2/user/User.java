@@ -165,6 +165,15 @@ public class User {
             return null;
         }
 
+        public User getSpecificUser(int id){
+            for(User u: getUsers()){
+                if(u.id == id){
+                    return u;
+                }
+            }
+            return null;
+        }
+
         public void deleteUser(String email){
             SQLiteDatabase db = this.getWritableDatabase();
             db.delete("user", "EMAIL = ?", new String[]{email});

@@ -1,12 +1,11 @@
 package com.github.sebastiankg02.csy2061as2.fragments.views;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.github.sebastiankg02.csy2061as2.R;
 

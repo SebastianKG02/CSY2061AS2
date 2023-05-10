@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,7 +64,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
                     holder.quantity.setText(String.valueOf(quantityValue-1));
                     updateTotalPrice(holder, basketProduct.getPrice(), quantityValue-1);
                     Basket.removeFromBasket(basketProduct, 1);
-                    BasketFragment.calculateTotalPrice(context);
+                    BasketFragment.calculateTotalPrice(context, true);
                 } else {
                     removeItem(basketProduct, holder);
                 }
@@ -80,7 +79,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
                     holder.quantity.setText(String.valueOf(quantityValue+1));
                     updateTotalPrice(holder, basketProduct.getPrice(), quantityValue+1);
                     Basket.addToBasket(basketProduct, 1);
-                    BasketFragment.calculateTotalPrice(context);
+                    BasketFragment.calculateTotalPrice(context, true);
                 }
             }
         });
@@ -103,7 +102,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
                         dialogInterface.dismiss();
                         Basket.removeFromBasket(basketProduct);
                         notifyItemRemoved(holder.getAdapterPosition());
-                        BasketFragment.calculateTotalPrice(context);
+                        BasketFragment.calculateTotalPrice(context, true);
                     }
                 })
                 .setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {

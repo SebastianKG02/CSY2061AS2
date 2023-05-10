@@ -8,4 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#FFFF0000</color>
+    <color name="order_created">#FFFF5555</color>
+    <color name="order_packing">#FFFF7755</color>
+    <color name="order_pre_dispatch">#FFFF9955</color>
+    <color name="order_dispatched">#FFFFFF55</color>
+    <color name="order_delivered">#FF00FF00</color>
+    <color name="order_start_return">#FF0000FF</color>
+    <color name="order_returned">#FF00AAFF</color>
+    <color name="order_cancelled">@color/red</color>
+    <color name="order_error">#FFFF00EE</color>
 </resources>

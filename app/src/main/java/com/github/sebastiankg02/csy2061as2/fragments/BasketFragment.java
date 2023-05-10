@@ -2,11 +2,6 @@ package com.github.sebastiankg02.csy2061as2.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.github.sebastiankg02.csy2061as2.MainActivity;
 import com.github.sebastiankg02.csy2061as2.R;
 import com.github.sebastiankg02.csy2061as2.data.Basket;
@@ -24,8 +23,6 @@ import com.github.sebastiankg02.csy2061as2.data.Order;
 import com.github.sebastiankg02.csy2061as2.data.Product;
 import com.github.sebastiankg02.csy2061as2.data.adapters.BasketAdapter;
 import com.google.android.material.snackbar.Snackbar;
-
-import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 
@@ -73,7 +70,7 @@ public class BasketFragment extends Fragment {
 
         shippingStandard.setChecked(true);
         currentShippingCost = DeliveryMethod.STANDARD.cost;
-        calculateTotalPrice(getContext());
+        calculateTotalPrice(getContext(), true);
 
         shippingStandard.setText(getResources().getString(DeliveryMethod.STANDARD.resString) + "\n£"+new DecimalFormat("#.0#").format(DeliveryMethod.STANDARD.cost));
         shippingStandard.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +80,7 @@ public class BasketFragment extends Fragment {
                 shippingExpress.setChecked(false);
                 shippingNextDay.setChecked(false);
                 currentShippingCost = DeliveryMethod.STANDARD.cost;
-                calculateTotalPrice(getContext());
+                calculateTotalPrice(getContext(), true);
             }
         });
 
@@ -95,7 +92,7 @@ public class BasketFragment extends Fragment {
                 shippingExpress.setChecked(true);
                 shippingNextDay.setChecked(false);
                 currentShippingCost = DeliveryMethod.EXPRESS.cost;
-                calculateTotalPrice(getContext());
+                calculateTotalPrice(getContext(), true);
             }
         });
 
@@ -107,12 +104,12 @@ public class BasketFragment extends Fragment {
                 shippingExpress.setChecked(false);
                 shippingNextDay.setChecked(true);
                 currentShippingCost = DeliveryMethod.NEXT_DAY.cost;
-                calculateTotalPrice(getContext());
+                calculateTotalPrice(getContext(), true);
             }
         });
 
         updateBasketView(getContext());
-        calculateTotalPrice(getContext());
+        calculateTotalPrice(getContext(), true);
 
         placeOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +146,7 @@ public class BasketFragment extends Fragment {
         if(Basket.getContents().size() > 0){
             emptyText.setVisibility(View.GONE);
             LinearLayout.LayoutParams textMargin = (LinearLayout.LayoutParams) emptyText.getLayoutParams();
-            //textMargin.setMargins(0, 0, 0, 0);
+            textMargin.setMargins(0, 0, 0, 0);
             emptyText.setLayoutParams(textMargin);
             recycler.setVisibility(View.VISIBLE);
         } else {
@@ -161,15 +158,23 @@ public class BasketFragment extends Fragment {
         }
     }
 
-    public static void calculateTotalPrice(Context c){
+    public static String calculateTotalPrice(Context c, boolean setTotalPrice){
         Product.DBHelper prodHelper = new Product.DBHelper(c, "Product", null, 1);
 
         float price = currentShippingCost;
         for(int i: Basket.getContents().keySet()){
             price += prodHelper.getSpecificProduct(i).getPrice() * Basket.getContents().get(i);
         }
+
         updateBasketView(c);
-        totalPrice.setText("£"+new DecimalFormat("#.0#").format(price) + "\nincluding VAT of £"+new DecimalFormat("#.0#").format(price-(price/1.2f)));
+
+        String output = "£" + new DecimalFormat("#.0#").format(price) + "\nincluding VAT of £" + new DecimalFormat("#.0#").format(price - (price / 1.2f));
+
+        if(setTotalPrice) {
+            totalPrice.setText(output);
+        }
+
+        return output;
     }
 
     @Override

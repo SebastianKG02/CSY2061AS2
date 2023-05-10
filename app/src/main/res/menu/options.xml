@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:title="Support">
-        <item
-            android:id="@+id/bugReportOption"
-            android:title="Report a Bug"/>
-        <item
-            android:id="@+id/getSupportOption"
-            android:title="Get Help" />
-    </group>
-    <group android:title="General">
-        <item
-            android:id="@+id/logoutOption"
-            android:title="Log Out"/>
-        <item
-            android:id="@+id/exitOption"
-            android:title="Exit App"/>
-    </group>
+    <item
+        android:id="@+id/bugReportOption"
+        android:title="@string/menu_bug_report"/>
+    <item
+        android:id="@+id/getSupportOption"
+        android:title="@string/menu_support" />
+    <item
+        android:id="@+id/logoutOption"
+        android:title="@string/menu_log_out"/>
+    <item
+        android:id="@+id/exitOption"
+        android:title="@string/menu_exit"/>
 </menu>

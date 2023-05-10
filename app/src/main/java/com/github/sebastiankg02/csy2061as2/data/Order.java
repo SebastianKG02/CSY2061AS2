@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.github.sebastiankg02.csy2061as2.user.User;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,6 +95,63 @@ public class Order {
         return orderProducts;
     }
 
+    public void requestOrderStatusUpdate(Context c){
+        int speedFactor = delivery.maximumDays;
+        LocalDateTime createdTime = created;
+
+        switch(status){
+            case CREATED:
+                if(LocalDateTime.now().isAfter(created.plusMinutes(30L * speedFactor))){
+                    status = OrderStatus.PACKING;
+                }
+                break;
+            case PACKING:
+                if(LocalDateTime.now().isAfter(createdTime.plusHours(2L * speedFactor))){
+                    status = OrderStatus.PRE_DISPATCH;
+                }
+                break;
+            case PRE_DISPATCH:
+                if(LocalDateTime.now().isAfter(createdTime.plusHours(8L * speedFactor))){
+                    status = OrderStatus.DISPATCHED;
+                }
+                break;
+            case DISPATCHED:
+                if(LocalDateTime.now().isAfter(createdTime.plusHours(12L * speedFactor))){
+                    status = OrderStatus.DELIVERED;
+                }
+                break;
+            case START_RETURN:
+                if(LocalDateTime.now().isAfter(createdTime.plusHours(12L))){
+                    status = OrderStatus.RETURNED;
+                }
+                break;
+        }
+
+        Order.DBHelper orderHelper = new Order.DBHelper(c, "Order", null, 1);
+        orderHelper.updateOrder(this);
+    }
+
+    public int getOrderProductCount(){
+        int output = 0;
+
+        for(OrderProduct op: orderProducts){
+            output += op.getQuantity();
+        }
+
+        return output;
+    }
+
+    public String calculateTotalPrice(Context c){
+        Product.DBHelper productHelper = new Product.DBHelper(c, "Product", null, 1);
+        updateProducts(c);
+
+        float price = delivery.cost;
+        for(OrderProduct op: orderProducts){
+            price += productHelper.getSpecificProduct(op.getProduct()).getPrice() * op.getQuantity();
+        }
+        return "£" + new DecimalFormat("#.0#").format(price) + "\nincluding VAT of £" + new DecimalFormat("#.0#").format(price - (price / 1.2f));
+    }
+
     public void setOrderProducts(ArrayList<OrderProduct> orderProducts) {
         this.orderProducts = orderProducts;
     }
@@ -136,6 +194,28 @@ public class Order {
             c.close();
             db.close();
             return output;
+        }
+
+        public void updateOrder(Order updated){
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues cv = new ContentValues();
+
+            cv.put("USER_ID", updated.getUserID());
+            cv.put("DELIVERY", updated.getDelivery().value);
+            cv.put("STATUS", updated.getStatus().status);
+            cv.put("CREATED", User.formatter.format(updated.getCreated()));
+
+            db.update("m_order", cv, "ID = ?", new String[]{String.valueOf(updated.id)});
+            db.close();
+        }
+
+        public Order getSpecificOrder(int orderID){
+            for(Order o: getAllOrders()){
+                if(o.id == orderID){
+                    return o;
+                }
+            }
+            return null;
         }
 
         public ArrayList<Order> getAllOrdersForUser(int userID){

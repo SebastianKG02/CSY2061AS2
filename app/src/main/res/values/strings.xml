@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CSY2061AS2</string>
+    <string name="app_name">@string/app_title</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_title">KWESI JAMES $HOPPING</string>
@@ -63,4 +63,23 @@
     <string name="basket_empty">Your basket is empty!</string>
     <string name="user_profile">Your Profile</string>
     <string name="user_orders">Your Orders</string>
+    <string name="no_orders">You haven\'t made an order yet!</string>
+    <string name="order_created">Order created on:</string>
+    <string name="order_delivery_method">Delivery method:</string>
+    <string name="order_delivery_latest">Due to be delivered by:</string>
+    <string name="order_status_created">Created</string>
+    <string name="order_status_packing">Packing</string>
+    <string name="order_status_pre_dispatch">Awaiting Dispatch</string>
+    <string name="order_status_dispatch">Dispatched</string>
+    <string name="order_status_delivered">Delivered</string>
+    <string name="order_status_start_return">Return In Progress</string>
+    <string name="order_status_returned">Returned</string>
+    <string name="order_status_cancelled">Cancelled</string>
+    <string name="order_status_error">Error!</string>
+    <string name="menu_bug_report">Report a Bug</string>
+    <string name="menu_support">Get Help</string>
+    <string name="menu_log_out">Log Out</string>
+    <string name="menu_exit">Exit App</string>
+    <string name="menu_view">View Product Page</string>
+    <string name="menu_add_to_basket">Add to Basket</string>
 </resources>

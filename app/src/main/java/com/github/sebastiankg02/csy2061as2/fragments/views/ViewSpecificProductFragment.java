@@ -1,11 +1,6 @@
 package com.github.sebastiankg02.csy2061as2.fragments.views;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.navigation.ui.NavigationUI;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +8,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import com.github.sebastiankg02.csy2061as2.MainActivity;
 import com.github.sebastiankg02.csy2061as2.R;
 import com.github.sebastiankg02.csy2061as2.data.Basket;
-import com.github.sebastiankg02.csy2061as2.data.Product;
 import com.google.android.material.snackbar.Snackbar;
-
-import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 

@@ -10,5 +10,6 @@
     <dimen name="text_general">16sp</dimen>
     <dimen name="text_sub">12dp</dimen>
     <dimen name="text_padding_recycler">2.5dp</dimen>
+    <dimen name="text_padding_recycler_half">1.25dp</dimen>
     <dimen name="recycler_padding">5dp</dimen>
 </resources>

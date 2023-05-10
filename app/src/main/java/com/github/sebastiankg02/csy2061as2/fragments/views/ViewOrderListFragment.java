@@ -1,66 +1,80 @@
 package com.github.sebastiankg02.csy2061as2.fragments.views;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.github.sebastiankg02.csy2061as2.MainActivity;
 import com.github.sebastiankg02.csy2061as2.R;
+import com.github.sebastiankg02.csy2061as2.data.Order;
+import com.github.sebastiankg02.csy2061as2.data.adapters.OrderAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ViewOrderListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class ViewOrderListFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private View masterView;
+    private TextView emptyText;
+    private RecyclerView recycler;
+    private Button backButton;
+    private int dpToPx;
+    public static int dpToPxBorder;
+    private OrderAdapter adapter;
 
     public ViewOrderListFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ViewOrderListFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ViewOrderListFragment newInstance(String param1, String param2) {
-        ViewOrderListFragment fragment = new ViewOrderListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        super(R.layout.fragment_view_order_list);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onViewCreated(View v, Bundle b) {
+        super.onViewCreated(v, b);
+
+        dpToPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, getResources().getDimension(R.dimen.text_margin), getResources().getDisplayMetrics());
+        dpToPxBorder = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, getResources().getDimension(R.dimen.text_padding_recycler_half), getResources().getDisplayMetrics());
+
+        emptyText = (TextView) masterView.findViewById(R.id.viewOrderListText);
+        recycler = (RecyclerView) masterView.findViewById(R.id.viewOrderListRecycler);
+        backButton = (Button) masterView.findViewById(R.id.viewOrderListBackToBrowse);
+
+        Order.DBHelper orderHelper = new Order.DBHelper(getContext(), "Order", null, 1);
+        ArrayList<Order> userOrders = orderHelper.getAllOrdersForUser(MainActivity.currentLoggedInUser.id);
+
+        adapter = new OrderAdapter(userOrders, getContext());
+        recycler.setAdapter(adapter);
+        recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        if(userOrders.size() > 0){
+            emptyText.setVisibility(View.GONE);
+            recycler.setVisibility(View.VISIBLE);
+        } else {
+            LinearLayout.LayoutParams textMargin = (LinearLayout.LayoutParams) emptyText.getLayoutParams();
+            textMargin.setMargins(dpToPx, dpToPx, dpToPx, dpToPx);
+            emptyText.setLayoutParams(textMargin);
+            recycler.setVisibility(View.GONE);
+            emptyText.setVisibility(View.VISIBLE);
         }
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.globalNavigation.popBackStack();
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_order_list, container, false);
+        masterView = inflater.inflate(R.layout.fragment_view_order_list, container, false);
+        return masterView;
     }
 }
