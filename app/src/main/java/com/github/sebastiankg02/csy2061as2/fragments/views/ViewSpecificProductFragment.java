@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import com.github.sebastiankg02.csy2061as2.MainActivity;
 import com.github.sebastiankg02.csy2061as2.R;
+import com.github.sebastiankg02.csy2061as2.data.Basket;
+import com.github.sebastiankg02.csy2061as2.data.Product;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.w3c.dom.Text;
@@ -75,6 +78,8 @@ public class ViewSpecificProductFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Snackbar.make(masterView, "ADD TO BASKET TBC.", Snackbar.LENGTH_SHORT).show();
+                Basket.init();
+                Basket.addToBasket(ViewProductListFragment.currentProductViewing, Integer.valueOf(quantityText.getText().toString()));
             }
         });
 

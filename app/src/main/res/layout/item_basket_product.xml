@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/basketItemLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_category_border"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/button_margin"
+    android:padding="@dimen/recycler_padding">
+
+    <TextView
+        android:id="@+id/basketProductName"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/text_padding_recycler"
+        android:text="BASKET PRODUCT NAME GOES HERE"
+        android:textAlignment="textStart"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_general"/>
+
+    <TextView
+        android:id="@+id/basketPricePerProduct"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/text_padding_recycler"
+        android:text="BASKET PRICE PER PRODUCT GOES HERE"
+        android:textAlignment="center"
+        android:textSize="@dimen/text_sub"/>
+
+    <LinearLayout
+        android:id="@+id/basketQuantityLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginVertical="@dimen/button_margin"
+        android:layout_marginHorizontal="@dimen/text_padding_recycler">
+
+        <ImageButton
+            android:id="@+id/basketDecQuantityButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/minus"
+            android:layout_margin="@dimen/button_margin"
+            android:layout_weight="0.125"/>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/button_margin"
+            android:layout_weight="0.75">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/basketQuantityText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/quantity"
+                android:text="1"
+                android:textAlignment="center"
+                android:inputType="numberSigned" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            android:id="@+id/basketIncQuantityButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add"
+            android:layout_margin="@dimen/button_margin"
+            android:layout_weight="0.125"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_padding_recycler"
+            android:text="@string/total_price"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.5"
+            android:textSize="@dimen/text_sub"/>
+
+        <TextView
+            android:id="@+id/basketProductTotalPriceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_padding_recycler"
+            android:text="PRICE GOES HERE\nVAT AMOUNT"
+            android:layout_weight="0.5"
+            android:textAlignment="textEnd"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_sub"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/basketRemoveItemButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/title_margin"
+        android:layout_marginVertical="@dimen/text_margin"
+        android:text="@string/basket_remove"/>
+</LinearLayout>

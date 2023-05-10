@@ -52,4 +52,13 @@
     <string name="out_of_stock">Out of stock! Check back soon!</string>
     <string name="view_product">View Product</string>
     <string name="total_price">Total Price:</string>
+    <string name="shipping_std">Standard</string>
+    <string name="shipping_exp">Express</string>
+    <string name="shipping_nxt">Next Day</string>
+    <string name="shipping_sel">Select Shipping Method:</string>
+    <string name="place_order">Place Order</string>
+    <string name="back_to_browse">Back to Browse</string>
+    <string name="basket_remove">Remove from Basket</string>
+    <string name="basket_remove_desc">Are you sure you want to remove this item from your basket?</string>
+    <string name="basket_empty">Your basket is empty!</string>
 </resources>

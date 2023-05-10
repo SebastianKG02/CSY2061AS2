@@ -1,14 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragments.BasketFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/basketInfoText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="@string/basket_empty"
+        android:textSize="@dimen/text_heading"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_margin="@dimen/title_margin"/>
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/basketRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/title_margin"
+        android:layout_marginVertical="@dimen/button_margin"
+        android:layout_weight="0.75"/>
+
+    <LinearLayout
+        android:id="@+id/basketActionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="@dimen/title_margin"
+        android:layout_marginVertical="@dimen/button_margin">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/shipping_sel"
+            android:textSize="@dimen/text_general"
+            android:layout_marginVertical="@dimen/text_margin"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/basketShippingStandard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/shipping_std"
+                android:layout_weight="0.33"/>
+
+            <RadioButton
+                android:id="@+id/basketShippingExpress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/shipping_exp"
+                android:layout_weight="0.33"/>
+
+            <RadioButton
+                android:id="@+id/basketShippingNextDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/shipping_nxt"
+                android:layout_weight="0.33"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/text_margin"
+            android:orientation="horizontal">
+            <TextView
+                android:text="@string/total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/text_general"/>
+
+            <TextView
+                android:id="@+id/basketTotalPriceAmountText"
+                android:text="TOTAL AMOUNT\nVAT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_weight="0.5"
+                android:textAlignment="textEnd"
+                android:textSize="@dimen/text_general"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/basketPlaceOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/title_margin"
+            android:layout_marginVertical="@dimen/button_margin"
+            android:text="@string/place_order"/>
+        <Button
+            android:id="@+id/basketBackToBrowse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/title_margin"
+            android:layout_marginVertical="@dimen/button_margin"
+            android:text="@string/back_to_browse"/>
+    </LinearLayout>
+
+</LinearLayout>

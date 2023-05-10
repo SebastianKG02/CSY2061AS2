@@ -69,8 +69,9 @@ public class Product {
         return stockLevel;
     }
 
-    public void setStockLevel(int stockLevel) {
+    public Product setStockLevel(int stockLevel) {
         this.stockLevel = stockLevel;
+        return this;
     }
 
     public void setId(int id) {
@@ -309,7 +310,7 @@ public class Product {
             return output;
         }
 
-        public void updateProduct(Product newProduct, int pID){
+        public void updateProduct(Product newProduct){
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues cv = new ContentValues();
 
@@ -323,7 +324,7 @@ public class Product {
             cv.put("UPDATED", User.formatter.format(newProduct.updated));
             cv.put("STOCK", newProduct.stockLevel);
 
-            db.update("product", cv, "ID = ?", new String[]{String.valueOf(pID)});
+            db.update("product", cv, "ID = ?", new String[]{String.valueOf(newProduct.id)});
             db.close();
         }
 
