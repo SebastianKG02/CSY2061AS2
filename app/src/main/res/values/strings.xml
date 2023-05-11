@@ -82,4 +82,17 @@
     <string name="menu_exit">Exit App</string>
     <string name="menu_view">View Product Page</string>
     <string name="menu_add_to_basket">Add to Basket</string>
+    <string name="menu_view_order">View Order Contents</string>
+    <string name="menu_cancel_order">Cancel Order</string>
+    <string name="menu_return">Start a Return</string>
+    <string name="return_title">Return an Order</string>
+    <string name="menu_remove_order">Remove Order</string>
+    <string name="remove_order_desc">This will <b>permanently</b> remove this order from your order history!\n\nAre you sure you want to do this? (this action is irreversible)</string>
+    <string name="remove_order_confirm">Confirm &amp; Remove</string>
+    <string name="return_desc">We at Kwesi James $hopping take great pride in our products and deeply apologise that you are not fully satisfied with your order.\nAre you sure you want to start a return?\nWe will send you a pre–paid shipping label via email, and will get in touch with you upon receipt to get more information. Any refund will take 3–5 business days to reach your preferred payment method.</string>
+    <string name="cancel_title">Cancel an Order</string>
+    <string name="cancel_desc">We are very sorry to hear you wish to cancel your order. This is irreversible, and a refund will reach your preferred payment method within 3–5 business days.\nAre you sure you want to cancel your order?</string>
+    <string name="return_confirm">Confirm &amp; Return</string>
+    <string name="cancel_confirm">Confirm &amp; Cancel</string>
+    <string name="back_orders">Back to Your Orders</string>
 </resources>

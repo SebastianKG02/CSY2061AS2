@@ -63,6 +63,11 @@ public class OrderProduct {
         this.quantity = quantity;
     }
 
+    public void delete(Context c){
+        OrderProduct.DBHelper opHelper = new OrderProduct.DBHelper(c, "order_product", null, 1);
+        opHelper.removeOrderProduct(this);
+    }
+
     public static class DBHelper extends SQLiteOpenHelper {
 
         public DBHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -141,6 +146,12 @@ public class OrderProduct {
             data.close();
 
             return true;
+        }
+
+        public void removeOrderProduct(OrderProduct toRemove){
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.delete("order_product", "ID = ?", new String[]{String.valueOf(toRemove.id)});
+            db.close();
         }
 
         @Override

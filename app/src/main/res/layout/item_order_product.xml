@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/opItemLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_category_border"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/button_margin"
+    android:padding="@dimen/recycler_padding">
+
+    <TextView
+        android:id="@+id/opMainText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/text_padding_recycler"
+        android:text="PRODUCT NAME GOES HERE"
+        android:textAlignment="textStart"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_general"/>
+
+    <TextView
+        android:id="@+id/opDescText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/text_padding_recycler"
+        android:text="PRODUCT DESCRIPTION GOES HERE"
+        android:textAlignment="textStart"
+        android:textStyle="italic"
+        android:textSize="@dimen/text_sub"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/opStockText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/text_padding_recycler"
+            android:text="STOCK LEVEL GOES HERE"
+            android:textAlignment="textStart"
+            android:layout_weight="0.5"
+            android:textSize="@dimen/text_sub"/>
+
+        <TextView
+            android:id="@+id/opPriceText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/text_padding_recycler"
+            android:text="PRICE GOES  HERE"
+            android:layout_weight="0.5"
+            android:textAlignment="textEnd"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_sub"/>
+    </LinearLayout>
+</LinearLayout>

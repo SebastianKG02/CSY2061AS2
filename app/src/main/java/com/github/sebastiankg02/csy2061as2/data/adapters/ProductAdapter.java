@@ -54,7 +54,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         holder.stockText.setText(String.valueOf(currentProduct.getStockLevel()) + " in stock.");
 
-        Log.i("STOCK", currentProduct.getName() + " has stock of: " + String.valueOf(currentProduct.getStockLevel()));
         if(currentProduct.getStockLevel() <= 0){
             holder.stockText.setText(R.string.out_of_stock);
             holder.stockText.setTextColor(context.getColor(R.color.red));
@@ -65,9 +64,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(holder.itemLayout, "GOTO PRODUCT " + currentProduct.getName(), Snackbar.LENGTH_SHORT).show();
                 PopupMenu popup = new PopupMenu(context, view);
                 popup.getMenuInflater().inflate(R.menu.product_click, popup.getMenu());
+                popup.getMenu().removeItem(0);
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {

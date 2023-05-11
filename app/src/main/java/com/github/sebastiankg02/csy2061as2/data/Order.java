@@ -123,6 +123,7 @@ public class Order {
             case START_RETURN:
                 if(LocalDateTime.now().isAfter(createdTime.plusHours(12L))){
                     status = OrderStatus.RETURNED;
+                    updateOrder(c, true);
                 }
                 break;
         }
@@ -133,7 +134,6 @@ public class Order {
 
     public int getOrderProductCount(){
         int output = 0;
-
         for(OrderProduct op: orderProducts){
             output += op.getQuantity();
         }
@@ -150,6 +150,27 @@ public class Order {
             price += productHelper.getSpecificProduct(op.getProduct()).getPrice() * op.getQuantity();
         }
         return "£" + new DecimalFormat("#.0#").format(price) + "\nincluding VAT of £" + new DecimalFormat("#.0#").format(price - (price / 1.2f));
+    }
+
+    public void updateOrder(Context c, boolean cancel){
+        Order.DBHelper orderHelper = new Order.DBHelper(c, "Order", null, 1);
+        orderHelper.updateOrder(this);
+
+        if(cancel) {
+            Product.DBHelper productHelper = new Product.DBHelper(c, "Product", null, 1);
+            Product temp = new Product();
+            for (OrderProduct op : orderProducts) {
+                temp = productHelper.getSpecificProduct(op.getProduct());
+                temp.setStockLevel(temp.getStockLevel() + op.getQuantity());
+                productHelper.updateProduct(temp);
+                op.delete(c);
+            }
+        }
+    }
+
+    public void delete(Context c){
+        Order.DBHelper orderHelper = new Order.DBHelper(c, "Order", null, 1);
+        orderHelper.removeOrder(this, c);
     }
 
     public void setOrderProducts(ArrayList<OrderProduct> orderProducts) {
@@ -286,6 +307,13 @@ public class Order {
 
             //Add order entry to database
             addOrder(c, output);
+        }
+
+        public void removeOrder(Order toRemove, Context c){
+            SQLiteDatabase db = this.getWritableDatabase();
+            toRemove.updateOrder(c, true);
+            db.delete("m_order", "ID = ?", new String[]{String.valueOf(toRemove.getId())});
+            db.close();
         }
 
         @Override

@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu>
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/viewOrderContentsOption"
+        android:title="@string/menu_view_order"/>
+    <item
+        android:id="@+id/startReturnOption"
+        android:title="@string/menu_return"/>
+    <item
+        android:id="@+id/cancelOrderOption"
+        android:title="@string/menu_cancel_order"/>
+    <item
+        android:id="@+id/removeOrderOption"
+        android:title="@string/menu_remove_order"/>
 </menu>
