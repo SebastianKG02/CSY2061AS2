@@ -3,6 +3,7 @@ package com.github.sebastiankg02.csy2061as2.data;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -64,26 +65,30 @@ public class OrderProduct {
     }
 
     public void delete(Context c){
-        OrderProduct.DBHelper opHelper = new OrderProduct.DBHelper(c, "order_product", null, 1);
+        OrderProduct.DBHelper opHelper = new OrderProduct.DBHelper(c);
         opHelper.removeOrderProduct(this);
     }
 
     public static class DBHelper extends SQLiteOpenHelper {
 
-        public DBHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-            super(context, name, factory, version);
+        public DBHelper(Context c){
+            super(c, "KWD", null, 1);
         }
 
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
-            sqLiteDatabase.execSQL(""+
-                    "CREATE TABLE order_product(" +
-                    "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "ORDER_ID INTEGER NOT NULL," +
-                    "PRODUCT_ID INTEGER NOT NULL," +
-                    "QUANTITY INTEGER NOT NULL DEFAULT 0," +
-                    "FOREIGN KEY (ORDER_ID) REFERENCES m_order(ID)," +
-                    "FOREIGN KEY (PRODUCT_ID) REFERENCES product(ID))");
+            try {
+                sqLiteDatabase.execSQL("" +
+                        "CREATE TABLE order_product(" +
+                        "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "ORDER_ID INTEGER NOT NULL," +
+                        "PRODUCT_ID INTEGER NOT NULL," +
+                        "QUANTITY INTEGER NOT NULL DEFAULT 0," +
+                        "FOREIGN KEY (ORDER_ID) REFERENCES m_order(ID)," +
+                        "FOREIGN KEY (PRODUCT_ID) REFERENCES product(ID))");
+            } catch (SQLException e){
+
+            }
         }
 
         public ArrayList<OrderProduct> getAllOrderProducts(){
@@ -158,6 +163,11 @@ public class OrderProduct {
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS order_product");
             onCreate(sqLiteDatabase);
+        }
+
+        @Override
+        public void onOpen(SQLiteDatabase db){
+            onCreate(db);
         }
     }
 }

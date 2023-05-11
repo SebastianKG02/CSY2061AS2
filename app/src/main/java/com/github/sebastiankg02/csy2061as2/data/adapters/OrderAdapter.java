@@ -51,7 +51,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         Order currentOrder = orders.get(position);
         currentOrder.updateProducts(context);
         currentOrder.requestOrderStatusUpdate(context);
-        User.DBHelper userHelper = new User.DBHelper(context, "User", null, 1);
+        User.DBHelper userHelper = new User.DBHelper(context);
         User currentUser = userHelper.getSpecificUser(currentOrder.getUserID());
 
         GradientDrawable itemBorder = (GradientDrawable) holder.itemLayout.getBackground().mutate();

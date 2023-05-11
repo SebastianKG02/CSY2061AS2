@@ -39,7 +39,7 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         OrderProduct currentOP = products.get(position);
-        Product.DBHelper prodHelper = new Product.DBHelper(context, "Product", null, 1);
+        Product.DBHelper prodHelper = new Product.DBHelper(context);
         Product currentProduct = prodHelper.getSpecificProduct(currentOP.getProduct());
         float price = currentProduct.getPrice();
         int quantity = currentOP.getQuantity();

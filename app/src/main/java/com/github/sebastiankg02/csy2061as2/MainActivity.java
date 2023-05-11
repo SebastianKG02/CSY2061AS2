@@ -19,6 +19,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.github.sebastiankg02.csy2061as2.data.Category;
+import com.github.sebastiankg02.csy2061as2.data.Order;
+import com.github.sebastiankg02.csy2061as2.data.OrderProduct;
 import com.github.sebastiankg02.csy2061as2.user.User;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -65,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         //Control program flow - if a previous login has been detected, skip to landing page & not login page
-        User.DBHelper userHelper = new User.DBHelper(getApplicationContext(), "User", null, 1);
-        userHelper.addUser(new User());
+        User.DBHelper userHelper = new User.DBHelper(getApplicationContext());
+        Order.DBHelper orderHelper = new Order.DBHelper(getApplicationContext());
+        OrderProduct.DBHelper opHelper = new OrderProduct.DBHelper(getApplicationContext());
+        Category.DBHelper catHelper = new Category.DBHelper(getApplicationContext());
 
         SharedPreferences prefs = getSharedPreferences("kwesiData", Context.MODE_PRIVATE);
         hasLoggedIn = prefs.getBoolean("isLoggedIn", false);

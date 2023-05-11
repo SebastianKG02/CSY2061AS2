@@ -115,7 +115,7 @@ public class BasketFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(Basket.getContents().size() > 0) {
-                    Order.DBHelper orderHelper = new Order.DBHelper(getContext(), "Order", null, 1);
+                    Order.DBHelper orderHelper = new Order.DBHelper(getContext());
                     DeliveryMethod dm = DeliveryMethod.NONE;
 
                     if (shippingStandard.isChecked()) {
@@ -159,7 +159,7 @@ public class BasketFragment extends Fragment {
     }
 
     public static String calculateTotalPrice(Context c, boolean setTotalPrice){
-        Product.DBHelper prodHelper = new Product.DBHelper(c, "Product", null, 1);
+        Product.DBHelper prodHelper = new Product.DBHelper(c);
 
         float price = currentShippingCost;
         for(int i: Basket.getContents().keySet()){

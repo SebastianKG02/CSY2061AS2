@@ -3,6 +3,7 @@ package com.github.sebastiankg02.csy2061as2.data;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -147,12 +148,13 @@ public class Product {
 
     public static class DBHelper extends SQLiteOpenHelper {
 
-        public DBHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-            super(context, name, factory, version);
+        public DBHelper(Context context) {
+            super(context, "KWD", null, 1);
         }
 
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
+            try {
             sqLiteDatabase.execSQL(""+
                     "CREATE TABLE product(" +
                     "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -166,6 +168,9 @@ public class Product {
                     "UPDATED TEXT," +
                     "STOCK INTEGER NOT NULL DEFAULT 0," +
                     "FOREIGN KEY (CATEGORY) REFERENCES category(ID))");
+            } catch (SQLException e){
+
+            }
         }
 
         public void initDefaultProducts(){
@@ -339,6 +344,12 @@ public class Product {
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS product");
+            onCreate(sqLiteDatabase);
+        }
+
+        @Override
+        public void onOpen(SQLiteDatabase db){
+            onCreate(db);
         }
     }
 }

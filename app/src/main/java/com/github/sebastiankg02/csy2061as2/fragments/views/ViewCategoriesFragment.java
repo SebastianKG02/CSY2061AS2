@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.sebastiankg02.csy2061as2.R;
 import com.github.sebastiankg02.csy2061as2.data.Category;
+import com.github.sebastiankg02.csy2061as2.data.Product;
 import com.github.sebastiankg02.csy2061as2.data.adapters.CategoryAdapter;
+import com.github.sebastiankg02.csy2061as2.data.adapters.ProductAdapter;
 
 public class ViewCategoriesFragment extends Fragment {
 
@@ -36,12 +38,15 @@ public class ViewCategoriesFragment extends Fragment {
         recycler = (RecyclerView) masterView.findViewById(R.id.categoryRecycler);
         currentCategoryText = (TextView) masterView.findViewById(R.id.categoryTitleText);
 
-        Category.DBHelper catHelper = new Category.DBHelper(getContext(), "Category", null, 1);
+        Category.DBHelper catHelper = new Category.DBHelper(getContext());
         catHelper.initDefaultCategories();
+        Product.DBHelper prodHelper = new Product.DBHelper(getContext());
+        prodHelper.initDefaultProducts();
         adapter = new CategoryAdapter(catHelper.getCategories(), getContext());
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recycler.setAdapter(adapter);
+
     }
 
     @Override

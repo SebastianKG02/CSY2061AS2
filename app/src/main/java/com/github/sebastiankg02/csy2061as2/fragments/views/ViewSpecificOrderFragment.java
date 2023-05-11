@@ -64,7 +64,7 @@ public class ViewSpecificOrderFragment extends Fragment {
         GradientDrawable itemBorder = (GradientDrawable) itemLayout.getBackground().mutate();
         itemBorder.setStroke(ViewOrderListFragment.dpToPxBorder,getContext().getColor(workingOrder.getStatus().displayColour));
 
-        User.DBHelper userHelper = new User.DBHelper(getContext(), "User", null, 1);
+        User.DBHelper userHelper = new User.DBHelper(getContext());
         User currentUser = userHelper.getSpecificUser(workingOrder.getUserID());
         orderNumber.setText("Order #" + workingOrder.getUserID() + currentUser.fullName.substring(0, 3).toUpperCase() + "-" + workingOrder.getId());
         orderStatus.setText(workingOrder.getStatus().displayMessage);

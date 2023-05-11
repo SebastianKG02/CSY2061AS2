@@ -51,7 +51,7 @@ public class RegisterFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User.DBHelper userHelper = new User.DBHelper(getActivity().getApplicationContext(), "User", null, 1);
+                User.DBHelper userHelper = new User.DBHelper(getContext());
                 String username = usernameEnter.getText().toString();
                 String fullName = fullNameEnter.getText().toString();
                 String password = passwordEnter.getText().toString();

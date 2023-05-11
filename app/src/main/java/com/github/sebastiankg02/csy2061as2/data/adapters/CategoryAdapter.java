@@ -42,7 +42,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         Category currentCategory = categories.get(position);
         holder.mainText.setText(currentCategory.getMainCategory());
 
-        Product.DBHelper prodHelper = new Product.DBHelper(context, "Product", null, 1);
+        Product.DBHelper prodHelper = new Product.DBHelper(context);
         int numberOfProducts = prodHelper.getAllProductsInCategory(currentCategory.getId()).size();
 
         if(numberOfProducts > 1){

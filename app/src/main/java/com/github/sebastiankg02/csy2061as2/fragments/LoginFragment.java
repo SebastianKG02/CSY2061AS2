@@ -60,7 +60,7 @@ public class LoginFragment extends Fragment {
                 String password = passwordInput.getText().toString();
 
                 if(!username.isEmpty() && !password.isEmpty()){
-                    User.DBHelper userHelper = new User.DBHelper(getActivity().getApplicationContext(), "User", null, 1);
+                    User.DBHelper userHelper = new User.DBHelper(getContext());
                     boolean userFound = false;
 
                     for(User u: userHelper.getUsers()){
@@ -69,7 +69,7 @@ public class LoginFragment extends Fragment {
                             if(u.password.equals(password)){
                                 u.updatedDate = LocalDateTime.now();
                                 MainActivity.currentLoggedInUser = u;
-                                userHelper.updateUser(u, u.email);
+                                userHelper.updateUser(u);
                                 SharedPreferences prefs = getActivity().getSharedPreferences("kwesiData", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor edit = prefs.edit();
                                 edit.putBoolean("isLoggedIn", true);

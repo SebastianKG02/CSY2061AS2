@@ -65,7 +65,7 @@ public class ForgotPasswordFragment extends Fragment {
                 String password = newPasswordEnter.getText().toString();
                 String passwordConf = confirmPasswordEnter.getText().toString();
 
-                User.DBHelper userHelper = new User.DBHelper(getActivity().getApplicationContext(), "User", null, 1);
+                User.DBHelper userHelper = new User.DBHelper(getContext());
                 boolean userFound = false;
                 User likelyUser = null;
 
@@ -105,7 +105,7 @@ public class ForgotPasswordFragment extends Fragment {
 
                                 if (hasUppercase && hasLowercase && hasNumber) {
                                     likelyUser.password = password;
-                                    userHelper.updateUser(likelyUser, username);
+                                    userHelper.updateUser(likelyUser);
                                     Snackbar.make(masterLayout, R.string.forgot_pw_success, Snackbar.LENGTH_SHORT).show();
                                     MainActivity.globalNavigation.navigate(R.id.loginFragment);
                                 } else if (!hasLowercase) {

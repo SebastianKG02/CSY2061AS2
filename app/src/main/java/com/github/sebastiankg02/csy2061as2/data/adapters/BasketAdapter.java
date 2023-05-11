@@ -42,7 +42,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Product.DBHelper prodHelper = new Product.DBHelper(context, "Product", null, 1);
+        Product.DBHelper prodHelper = new Product.DBHelper(context);
 
         int productID = (int)Basket.getContents().keySet().toArray()[position];
         int productQuantity = Basket.getContents().get(productID);

@@ -3,8 +3,10 @@ package com.github.sebastiankg02.csy2061as2.data;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -41,13 +43,17 @@ public class Order {
     }
 
     public Order updateProducts(Context c){
-        OrderProduct.DBHelper opHelper = new OrderProduct.DBHelper(c, "OrderProduct", null, 1);
+        OrderProduct.DBHelper opHelper = new OrderProduct.DBHelper(c);
         this.orderProducts = opHelper.getAllOrderProductsInOrder(this.id);
+
+        for(OrderProduct op: orderProducts){
+            Log.i("OP", op.getOrder() + ": Item [" + op.getProduct() + "]: " + op.getQuantity());
+        }
         return this;
     }
 
     public ArrayList<OrderProduct> getProducts(Context c){
-        OrderProduct.DBHelper opHelper = new OrderProduct.DBHelper(c, "OrderProduct", null, 1);
+        OrderProduct.DBHelper opHelper = new OrderProduct.DBHelper(c);
         return opHelper.getAllOrderProductsInOrder(this.id);
     }
 
@@ -98,26 +104,31 @@ public class Order {
     public void requestOrderStatusUpdate(Context c){
         int speedFactor = delivery.maximumDays;
         LocalDateTime createdTime = created;
+        boolean hasUpdatedStatus = false;
 
         switch(status){
             case CREATED:
                 if(LocalDateTime.now().isAfter(created.plusMinutes(30L * speedFactor))){
                     status = OrderStatus.PACKING;
+                    hasUpdatedStatus = true;
                 }
                 break;
             case PACKING:
                 if(LocalDateTime.now().isAfter(createdTime.plusHours(2L * speedFactor))){
                     status = OrderStatus.PRE_DISPATCH;
+                    hasUpdatedStatus = true;
                 }
                 break;
             case PRE_DISPATCH:
                 if(LocalDateTime.now().isAfter(createdTime.plusHours(8L * speedFactor))){
                     status = OrderStatus.DISPATCHED;
+                    hasUpdatedStatus = true;
                 }
                 break;
             case DISPATCHED:
                 if(LocalDateTime.now().isAfter(createdTime.plusHours(12L * speedFactor))){
                     status = OrderStatus.DELIVERED;
+                    hasUpdatedStatus = true;
                 }
                 break;
             case START_RETURN:
@@ -128,8 +139,12 @@ public class Order {
                 break;
         }
 
-        Order.DBHelper orderHelper = new Order.DBHelper(c, "Order", null, 1);
+        Order.DBHelper orderHelper = new Order.DBHelper(c);
         orderHelper.updateOrder(this);
+
+        if(hasUpdatedStatus){
+            requestOrderStatusUpdate(c);
+        }
     }
 
     public int getOrderProductCount(){
@@ -142,7 +157,7 @@ public class Order {
     }
 
     public String calculateTotalPrice(Context c){
-        Product.DBHelper productHelper = new Product.DBHelper(c, "Product", null, 1);
+        Product.DBHelper productHelper = new Product.DBHelper(c);
         updateProducts(c);
 
         float price = delivery.cost;
@@ -153,11 +168,11 @@ public class Order {
     }
 
     public void updateOrder(Context c, boolean cancel){
-        Order.DBHelper orderHelper = new Order.DBHelper(c, "Order", null, 1);
+        Order.DBHelper orderHelper = new Order.DBHelper(c);
         orderHelper.updateOrder(this);
 
         if(cancel) {
-            Product.DBHelper productHelper = new Product.DBHelper(c, "Product", null, 1);
+            Product.DBHelper productHelper = new Product.DBHelper(c);
             Product temp = new Product();
             for (OrderProduct op : orderProducts) {
                 temp = productHelper.getSpecificProduct(op.getProduct());
@@ -169,7 +184,7 @@ public class Order {
     }
 
     public void delete(Context c){
-        Order.DBHelper orderHelper = new Order.DBHelper(c, "Order", null, 1);
+        Order.DBHelper orderHelper = new Order.DBHelper(c);
         orderHelper.removeOrder(this, c);
     }
 
@@ -179,20 +194,24 @@ public class Order {
 
     public static class DBHelper extends SQLiteOpenHelper {
 
-        public DBHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-            super(context, name, factory, version);
+        public DBHelper(Context context) {
+            super(context, "KWD", null, 1);
         }
 
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
-            sqLiteDatabase.execSQL(""+
-                    "CREATE TABLE m_order(" +
-                    "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "USER_ID INTEGER NOT NULL," +
-                    "DELIVERY INTEGER NOT NULL DEFAULT 0," +
-                    "STATUS INTREGER NOT NULL DEFAULT 0," +
-                    "CREATED TEXT NOT NULL," +
-                    "FOREIGN KEY (USER_ID) REFERENCES user(ID))");
+            try {
+                sqLiteDatabase.execSQL("" +
+                        "CREATE TABLE m_order(" +
+                        "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "USER_ID INTEGER NOT NULL," +
+                        "DELIVERY INTEGER NOT NULL DEFAULT 0," +
+                        "STATUS INTREGER NOT NULL DEFAULT 0," +
+                        "CREATED TEXT NOT NULL," +
+                        "FOREIGN KEY (USER_ID) REFERENCES user(ID))");
+            } catch (SQLException e){
+
+            }
         }
 
         public ArrayList<Order> getAllOrders(){
@@ -272,7 +291,7 @@ public class Order {
 
             if(o.orderProducts != null){
                 for(OrderProduct op: o.orderProducts){
-                    OrderProduct.DBHelper opHelper = new OrderProduct.DBHelper(c, "OrderProduct", null, 1);
+                    OrderProduct.DBHelper opHelper = new OrderProduct.DBHelper(c);
                     opHelper.addOrderProduct(op);
                 }
             }
@@ -288,8 +307,8 @@ public class Order {
             //Get next available Order ID - SQLite starts AUTOINCREMENT from 1, hence the +1
             int orderID = getAllOrders().size()+1;
             //Initialise DBHelper instances for Products and OrderProducts
-            Product.DBHelper prodHelper = new Product.DBHelper(c, "Product", null, 1);
-            OrderProduct.DBHelper opHelper = new OrderProduct.DBHelper(c, "OrderProduct", null, 1);
+            Product.DBHelper prodHelper = new Product.DBHelper(c);
+            OrderProduct.DBHelper opHelper = new OrderProduct.DBHelper(c);
 
             //Loop through products in basket
             for(int i: basket.keySet()){
@@ -300,6 +319,7 @@ public class Order {
 
                 //Update product stock count on database
                 prodHelper.updateProduct(prodHelper.getSpecificProduct(i).setStockLevel(prodHelper.getSpecificProduct(i).getStockLevel()-basket.get(i)));
+                Log.i("OP", "Adding product " + i + "[" + prodHelper.getSpecificProduct(i).getName() + "]: " + basket.get(i));
             }
             output.userID = forUser.id;
             output.status = OrderStatus.CREATED;
@@ -320,6 +340,11 @@ public class Order {
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS m_order");
             onCreate(sqLiteDatabase);
+        }
+
+        @Override
+        public void onOpen(SQLiteDatabase db){
+            onCreate(db);
         }
     }
 }

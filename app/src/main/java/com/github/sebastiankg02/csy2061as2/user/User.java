@@ -3,6 +3,7 @@ package com.github.sebastiankg02.csy2061as2.user;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -90,19 +91,15 @@ public class User {
 	 **/
     public static class DBHelper extends SQLiteOpenHelper {
 
-		//Default constructor
-        public DBHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-            super(context, name, factory, version);
-        }
-
 		//Simplified constructor
-		public DBHelper(@Nullable Context context){
+		public DBHelper(Context context){
 			super(context, "KWD", null, 1);
 		}
 		
-		//Table cretion method
+		//Table creation method
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
+            try {
             sqLiteDatabase.execSQL("" +
                     "CREATE TABLE user(" +
                     "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -114,6 +111,9 @@ public class User {
                     "HOBBIES TEXT," +
                     "ADDRESS TEXT NOT NULL," +
                     "LEVEL INT NOT NULL)");
+            } catch (SQLException e){
+
+            }
         }
 
 		//Load data user object into db
@@ -222,6 +222,12 @@ public class User {
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS user");
+            onCreate(sqLiteDatabase);
+        }
+
+        @Override
+        public void onOpen(SQLiteDatabase db){
+            onCreate(db);
         }
     }
 }

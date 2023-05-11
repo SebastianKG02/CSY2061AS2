@@ -35,14 +35,14 @@ public class ViewProductListFragment extends Fragment {
         recycler = (RecyclerView) masterView.findViewById(R.id.productRecycler);
         currentCategoryHeader = (TextView) masterView.findViewById(R.id.productCategoryTitleText);
 
-        Product.DBHelper productHelper = new Product.DBHelper(getContext(), "Product", null, 1);
+        Product.DBHelper productHelper = new Product.DBHelper(getContext());
         productHelper.initDefaultProducts();
         adapter = new ProductAdapter(productHelper.getAllProductsInCategory(ViewCategoriesFragment.currentCategoryID), getContext(), getActivity());
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recycler.setAdapter(adapter);
 
-        Category.DBHelper catHelper = new Category.DBHelper(getContext(), "Category", null, 1);
+        Category.DBHelper catHelper = new Category.DBHelper(getContext());
         currentCategoryHeader.setText("Browsing " + ViewCategoriesFragment.currentCategoryTitle);
     }
 

@@ -44,7 +44,7 @@ public class ViewOrderListFragment extends Fragment {
         recycler = (RecyclerView) masterView.findViewById(R.id.viewOrderListRecycler);
         backButton = (Button) masterView.findViewById(R.id.viewOrderListBackToBrowse);
 
-        Order.DBHelper orderHelper = new Order.DBHelper(getContext(), "Order", null, 1);
+        Order.DBHelper orderHelper = new Order.DBHelper(getContext());
         ArrayList<Order> userOrders = orderHelper.getAllOrdersForUser(MainActivity.currentLoggedInUser.id);
 
         adapter = new OrderAdapter(userOrders, getContext());
