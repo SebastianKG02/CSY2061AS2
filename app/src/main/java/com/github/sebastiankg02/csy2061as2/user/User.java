@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+
 /**
  * User - data representation of a User within the application.
  * UserHelper - internal class within the user space that can directly manipulate User information from the SQLite DB
@@ -195,6 +196,7 @@ public class User {
             return output;
         }
 
+        //Get specific user by email & password, return null if not found
         public User getSpecificUser(String email, String password){
             for(User u: getUsers()){
                 if(u.email.equals(email) && u.password.equals(password)){
@@ -204,6 +206,7 @@ public class User {
             return null;
         }
 
+        //Get specific user by user ID
         public User getSpecificUser(int id){
             for(User u: getUsers()){
                 if(u.id == id){
@@ -213,18 +216,32 @@ public class User {
             return null;
         }
 
+        //Delete a user via their email 
         public void deleteUser(String email){
             SQLiteDatabase db = this.getWritableDatabase();
             db.delete("user", "EMAIL = ?", new String[]{email});
             db.close();
         }
 
+        /**
+         * Called when the database needs to be upgraded. Drops the existing user table and creates a new one.
+         *
+         * @param sqLiteDatabase The database to be upgraded
+         * @param i The old version of the database
+         * @param i1 The new version of the database
+         */
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS user");
             onCreate(sqLiteDatabase);
         }
 
+        /**
+         * Called when a database has been opened. This method is called after the database connection has been
+         * configured and after the database schema has been created, upgraded or downgraded as necessary.
+         *
+         * @param db The database that has been opened.
+         */
         @Override
         public void onOpen(SQLiteDatabase db){
             onCreate(db);

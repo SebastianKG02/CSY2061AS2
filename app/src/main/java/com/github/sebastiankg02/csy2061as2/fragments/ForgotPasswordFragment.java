@@ -18,6 +18,12 @@ import com.github.sebastiankg02.csy2061as2.R;
 import com.github.sebastiankg02.csy2061as2.user.User;
 import com.google.android.material.snackbar.Snackbar;
 
+/**
+ * A fragment that allows users to reset their password if they have forgotten it.
+ * Contains fields for entering username, name, address, new password, and confirm password.
+ * Also contains buttons for resetting the password, and clearing the fields, as well as a cancel button
+ * that navigates back to the login fragment.
+ */
 public class ForgotPasswordFragment extends Fragment {
     private View masterLayout;
     private EditText usernameEnter;
@@ -30,10 +36,22 @@ public class ForgotPasswordFragment extends Fragment {
     private Button clearButton;
     private Button cancelButton;
 
+    /**
+     * Constructs a new instance of the ForgotPasswordFragment.
+     * It inflates the fragment_forgot_password layout.
+     */
     public ForgotPasswordFragment() {
         super(R.layout.fragment_forgot_password);
     }
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,6 +60,13 @@ public class ForgotPasswordFragment extends Fragment {
         return masterLayout;
     }
 
+    /**
+     * Called when the view is created. Initializes the EditText fields for username, name, address, new password, and confirm password.
+     * Also sets up the onClickListeners for the reset, clear and cancel buttons.
+     *
+     * @param view The view that was created
+     * @param savedInstanceState The saved instance state of the fragment
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -56,9 +81,19 @@ public class ForgotPasswordFragment extends Fragment {
         clearButton = (Button) masterLayout.findViewById(R.id.forgotClearButton);
         cancelButton = (Button) masterLayout.findViewById(R.id.forgotCancelButton);
 
+        /*
+         * Set an OnClickListener on the resetButton. When clicked, retrieve the user's entered
+         * username, full name, address, new password, and confirmed password. Then check if the user exists
+         * in the database and if the entered full name and address match the user's details. If so, check if
+         * the new password meets the password requirements and if the confirmed password matches the new password.
+         * If all conditions are met, the user's password is updated in the database and a success message is displayed.
+         * The fragment will then navigate back to the login screen.
+         * If any of the conditions are not met, an appropriate error message is displayed.
+         */
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Load data from fields
                 String username = usernameEnter.getText().toString();
                 String fullname = nameEnter.getText().toString();
                 String address = addressEnter.getText().toString();
@@ -69,20 +104,22 @@ public class ForgotPasswordFragment extends Fragment {
                 boolean userFound = false;
                 User likelyUser = null;
 
+                //Check if username likely exists in database
                 for(User u: userHelper.getUsers()){
-                    Log.i("UAC", "Forgot PW: " + u.email);
                     if(u.email.equals(username)){
                         userFound = true;
                         likelyUser = u;
                     }
                 }
 
+                //Check for password requirements, reset password if met, if not, display error messages
                 if(userFound){
                     if(likelyUser.fullName.equals(fullname) && likelyUser.address.equals(address)){
                         if(!password.isEmpty() && !passwordConf.isEmpty() && password.equals(passwordConf)){
                             boolean hasUppercase = false, hasLowercase = false, hasNumber = false;
 
                             if(password.length() > User.passwordMinChars) {
+                                //Check password for matching password rules
                                 for (char c : User.passwordChars) {
                                     if (password.contains("" + c)) {
                                         hasLowercase = true;
@@ -103,6 +140,7 @@ public class ForgotPasswordFragment extends Fragment {
                                     }
                                 }
 
+                                //If all requirements ment, reset password & go to login fragment.
                                 if (hasUppercase && hasLowercase && hasNumber) {
                                     likelyUser.password = password;
                                     userHelper.updateUser(likelyUser);
@@ -136,6 +174,7 @@ public class ForgotPasswordFragment extends Fragment {
             }
         });
 
+        //Clear all fields
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,6 +188,7 @@ public class ForgotPasswordFragment extends Fragment {
             }
         });
 
+        //Go back to login fragment
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

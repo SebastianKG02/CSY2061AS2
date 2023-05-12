@@ -9,36 +9,43 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.github.sebastiankg02.csy2061as2.R;
-import com.github.sebastiankg02.csy2061as2.data.Category;
 import com.github.sebastiankg02.csy2061as2.data.Product;
-import com.github.sebastiankg02.csy2061as2.fragments.views.ViewCategoriesFragment;
 import com.github.sebastiankg02.csy2061as2.fragments.views.ViewProductListFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 /**
- * Contains a factory method for creating an alert dialog builder object responsible for changing product name.
+ * Contains a factory method for creating an alert dialog builder object responsible for changing product price.
+ * (Price, List price & Retail price)
  */
-public class ProductChangeNameDialog {
+public class ProductChangePriceDialog {
     /**
-     * Creates an alert dialog builder object for modifying a product's name.
+     * Creates an alert dialog builder object for modifying the price of a product.
      *
      * @param c The context of the activity
      * @param vg The ViewGroup of the activity
      * @param toChange The product to modify
-     * @return The alert dialog builder object
+     * @return The alert dialog builder object for modifying the price of a product
      */
     public static AlertDialog.Builder createDialog(Context c, ViewGroup vg, Product toChange) {
         AlertDialog.Builder output = new AlertDialog.Builder(c)
-                .setTitle("Modifying Product Name [" + toChange.getId() + "]: '" + toChange.getName() + "'");
-        View alertView = LayoutInflater.from(c).inflate(R.layout.dialog_product_change_name, vg, false);
+                .setTitle("Modifying Product Price [" + toChange.getId() + "]: '" + toChange.getName() + "'");
+        View alertView = LayoutInflater.from(c).inflate(R.layout.dialog_product_change_price, vg, false);
 
-        EditText text = alertView.findViewById(R.id.productChangeNameText);
-        text.setText(toChange.getName());
+        EditText price = alertView.findViewById(R.id.productChangePriceText);
+        EditText listPrice = alertView.findViewById(R.id.productChangeListPriceText);
+        EditText retailPrice = alertView.findViewById(R.id.productChangeRetailPriceText);
+
+        price.setText(String.valueOf(toChange.getPrice()));
+        listPrice.setText(String.valueOf(toChange.getListPrice()));
+        retailPrice.setText(String.valueOf(toChange.getRetailPrice()));
+
         output.setView(alertView).setPositiveButton(R.string.admin_product_change_name, new DialogInterface.OnClickListener() {
             /**
-             * Handles the positive button click event for the dialog box. If the text field is not empty, the product name is updated
-             * and the adapter is notified of the change. A success message is displayed using a Snackbar. If the update
-             * fails, an error message is displayed. If the text field is empty, an info message is displayed.
+             * Handles the positive button click event for the dialog box. If the price, list price, and retail price fields are not empty,
+             * the product's price, list price, and retail price are updated with the values entered in the fields. The updated
+             * product is then saved to the database and the product list is refreshed. A success message is displayed in a
+             * Snackbar. If any of the fields are empty or an exception is thrown while parsing the values, an error message is
+             * displayed in a Snackbar.
              *
              * @param dialogInterface The dialog interface that was clicked
              * @param i The index of the clicked item
@@ -46,9 +53,11 @@ public class ProductChangeNameDialog {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-                if(!text.getText().toString().isEmpty()) {
+                if(!price.getText().toString().isEmpty() && !listPrice.getText().toString().isEmpty() && !retailPrice.getText().toString().isEmpty()) {
                     try {
-                        toChange.setName(text.getText().toString());
+                        toChange.setPrice(Float.parseFloat(price.getText().toString()));
+                        toChange.setListPrice(Float.parseFloat(listPrice.getText().toString()));
+                        toChange.setRetailPrice(Float.parseFloat(retailPrice.getText().toString()));
                         Product.DBHelper prodHelper = new Product.DBHelper(c);
                         prodHelper.updateProduct(toChange);
                         ViewProductListFragment.adapter.notifyDataSetChanged();

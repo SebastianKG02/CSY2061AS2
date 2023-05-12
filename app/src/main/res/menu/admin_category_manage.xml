@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/adminCategoryView"
+        android:title="@string/category_view"/>
+    <item android:id="@+id/adminCategoryChangeName"
+        android:title="@string/category_change_name"/>
+    <item android:id="@+id/adminCategoryMigrateProducts"
+        android:title="@string/category_edit_migrate"/>
+    <item android:id="@+id/adminCategoryDelete"
+        android:title="@string/category_edit_delete"/>
+    <item android:id="@+id/adminCategoryNew"
+        android:title="@string/category_edit_new"/>
+</menu>

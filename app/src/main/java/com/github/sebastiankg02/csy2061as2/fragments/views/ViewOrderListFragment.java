@@ -20,6 +20,11 @@ import com.github.sebastiankg02.csy2061as2.data.adapters.OrderAdapter;
 
 import java.util.ArrayList;
 
+/**
+ * A fragment that displays a list of all of a users' orders.
+ * Contains a master view, an empty text view, a recycler view, a back button, and an adapter.
+ * The dpToPx and dpToPxBorder variables are used for layout border calculations.
+ */
 public class ViewOrderListFragment extends Fragment {
     private View masterView;
     private TextView emptyText;
@@ -29,10 +34,20 @@ public class ViewOrderListFragment extends Fragment {
     public static int dpToPxBorder;
     private OrderAdapter adapter;
 
+    /**
+     * Constructs a new ViewOrderListFragment object.
+     * This constructor sets the layout resource file to be used by the fragment.
+     */
     public ViewOrderListFragment() {
         super(R.layout.fragment_view_order_list);
     }
 
+    /**
+     * Called when the view is created. Initializes the view components and sets up the click listener for the back button.
+     *
+     * @param v The view that was created
+     * @param b The bundle containing any saved state information
+     */
     @Override
     public void onViewCreated(View v, Bundle b) {
         super.onViewCreated(v, b);
@@ -44,6 +59,7 @@ public class ViewOrderListFragment extends Fragment {
         recycler = (RecyclerView) masterView.findViewById(R.id.viewOrderListRecycler);
         backButton = (Button) masterView.findViewById(R.id.viewOrderListBackToBrowse);
 
+        //Load orders for this user 
         Order.DBHelper orderHelper = new Order.DBHelper(getContext());
         ArrayList<Order> userOrders = orderHelper.getAllOrdersForUser(MainActivity.currentLoggedInUser.id);
 
@@ -51,6 +67,10 @@ public class ViewOrderListFragment extends Fragment {
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
+        /*
+         * Check if there are any user orders and set the visibility of the empty text and recycler view accordingly.
+         * If there are no user orders, the empty text is displayed with a margin and the recycler view is hidden.
+         */
         if(userOrders.size() > 0){
             emptyText.setVisibility(View.GONE);
             recycler.setVisibility(View.VISIBLE);
@@ -62,6 +82,7 @@ public class ViewOrderListFragment extends Fragment {
             emptyText.setVisibility(View.VISIBLE);
         }
 
+        //Set an OnClickListener on the back button to pop the back stack of the global navigation.
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +91,14 @@ public class ViewOrderListFragment extends Fragment {
         });
     }
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -22,6 +22,12 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.DecimalFormat;
 
+/**
+ * Adapter for the RecyclerView that displays the items in the user's basket.
+ * The adapter is responsible for creating the views that represent each item in the basket.
+ *
+ * context The context of the activity or fragment that is using this adapter.
+ */
 public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder> {
 
     private Context context;
@@ -31,6 +37,15 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
         this.context = c;
     }
 
+    /**
+     * Called when RecyclerView needs a new {@link ViewHolder} of the given type to represent
+     * an item.
+     *
+     * @param parent The ViewGroup into which the new View will be added after it is bound to
+     *               an adapter position.
+     * @param viewType The view type of the new View.
+     * @return A new ViewHolder that holds a View of the given view type.
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,10 +55,19 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
         return holder;
     }
 
+    /**
+     * Binds the data to the views in the ViewHolder.
+     *
+     * @param holder The ViewHolder to bind the data to.
+     * @param position The position of the item in the adapter.
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product.DBHelper prodHelper = new Product.DBHelper(context);
 
+        /*
+         * Updates the view holder with the product details and quantity information.
+         */
         int productID = (int)Basket.getContents().keySet().toArray()[position];
         int productQuantity = Basket.getContents().get(productID);
         Product basketProduct = prodHelper.getSpecificProduct(productID);
@@ -56,6 +80,12 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
         holder.quantity.setText(String.valueOf(productQuantity));
         updateTotalPrice(holder, basketProduct.getPrice(), productQuantity);
 
+        /**
+         * Sets an OnClickListener on the decrement quantity button of a product in the basket.
+         * When the button is clicked, the quantity of the product is decremented by 1.
+         * If the quantity becomes 0, the product is removed from the basket.
+         * The total price of the basket is updated accordingly.
+         */
         holder.decQuantityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +101,12 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
             }
         });
 
+        /**
+         * Sets an OnClickListener on the increment quantity button of a product in the basket.
+         * When the button is clicked, the quantity of the product is incremented by 1, and the total price
+         * of the product is updated accordingly. The product is also added to the basket, and the total price
+         * of the basket is recalculated.
+         */
         holder.incQuantityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +120,10 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
             }
         });
 
+        /**
+         * Sets an OnClickListener on the remove button of a basket product item.
+         * When the button is clicked, the corresponding item is removed from the basket.
+         */
         holder.removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,6 +132,12 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
         });
     }
 
+    /**
+     * Removes an item from the basket and updates the UI accordingly.
+     *
+     * @param basketProduct The product to remove from the basket
+     * @param holder The ViewHolder associated with the product to remove
+     */
     private void removeItem(Product basketProduct, ViewHolder holder){
         AlertDialog removeDialog = new AlertDialog.Builder(context)
                 .setTitle(R.string.basket_remove)
@@ -114,15 +160,40 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
         removeDialog.show();
     }
 
+    /**
+     * Updates the total price displayed in the ViewHolder based on the given price and quantity.
+     *
+     * @param holder The ViewHolder containing the total price TextView to be updated.
+     * @param price The price of the item.
+     * @param newQuantity The new quantity of the item.
+     */
     private void updateTotalPrice(ViewHolder holder, float price, int newQuantity){
         holder.totalPrice.setText("£"+new DecimalFormat("#.0#").format(price * newQuantity)+"\n"+"inc. VAT of £"+new DecimalFormat("#.0#").format((price*newQuantity)-((price*newQuantity)/1.2f)));
     }
 
+    /**
+     * Returns the number of items in the basket.
+     *
+     * @return The number of items in the basket.
+     */
     @Override
     public int getItemCount() {
         return Basket.getContents().size();
     }
 
+    /**
+    * A ViewHolder describes an item view and metadata about its place within the RecyclerView.
+    * This ViewHolder is used to hold the views of a single item in the basket.
+    *
+    * itemView The view of the item in the basket
+    * itemLayout The layout of the item in the basket
+    * productName The name of the product in the basket
+    * productPricePer The price per unit of the product in the basket
+    * decQuantityButton The button to decrease the quantity of the product in the basket
+    * quantity The quantity of the product in the basket
+    * incQuantityButton The button to increase the quantity of the product in the basket
+    * totalPrice The total price
+    */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout itemLayout;
         public TextView productName;
@@ -133,6 +204,11 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
         public TextView totalPrice;
         public Button removeButton;
 
+        /**
+        * Constructs a ViewHolder object for the Basket - any any products within the basket
+        *
+        * @param itemView The view representing the basket item
+        */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemLayout = (LinearLayout) itemView.findViewById(R.id.basketItemLayout);
@@ -144,5 +220,6 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
             this.totalPrice = (TextView) itemView.findViewById(R.id.basketProductTotalPriceText);
             this.removeButton = (Button) itemView.findViewById(R.id.basketRemoveItemButton);
         }
-    }
+        
+    }   
 }

@@ -2,6 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/viewProductPageOption"
         android:title="@string/menu_view"/>
-    <item android:id="@+id/addToBasketOption"
-        android:title="@string/menu_add_to_basket"/>
+    <item android:id="@+id/adminProductChangeName"
+        android:title="@string/admin_product_change_name"/>
+    <item android:id="@+id/adminProductChangeDescription"
+        android:title="@string/admin_product_change_desc"/>
+    <item android:id="@+id/adminProductChangeCategory"
+        android:title="@string/admin_product_change_category"/>
+    <item android:id="@+id/adminProductChangeStock"
+        android:title="@string/admin_product_change_stock"/>
+    <item android:id="@+id/adminProductChangePrice"
+        android:title="@string/admin_product_change_price"/>
+    <item android:id="@+id/adminProductCreate"
+        android:title="@string/product_create"/>
+    <item android:id="@+id/adminProductDelete"
+        android:title="@string/product_delete"/>
 </menu>

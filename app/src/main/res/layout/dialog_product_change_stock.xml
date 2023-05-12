@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/productDecStockButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/minus"
+        android:layout_margin="@dimen/button_margin"
+        android:layout_weight="0.125"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/button_margin"
+        android:layout_weight="0.75">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/productChangeStockText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/product_stock"
+            android:inputType="numberSigned"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageButton
+        android:id="@+id/productIncStockButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add"
+        android:layout_margin="@dimen/button_margin"
+        android:layout_weight="0.125"/>
+
+</LinearLayout>

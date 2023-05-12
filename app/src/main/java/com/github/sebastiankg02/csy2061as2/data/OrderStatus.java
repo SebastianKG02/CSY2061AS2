@@ -3,7 +3,16 @@ package com.github.sebastiankg02.csy2061as2.data;
 import com.github.sebastiankg02.csy2061as2.R;
 
 /**
- * Simple enum for holding order status information, as well as a tring resource ID
+ * An enumeration of the possible statuses of an order.
+ * Each status has an associated integer value, string resource ID, and color resource ID.
+ * The possible statuses are:
+ * - CREATED: The order has been created but not yet processed.
+ * - PACKING: The order is being packed and prepared for dispatch.
+ * - PRE_DISPATCH: The order is ready for dispatch but has not yet been dispatched.
+ * - DISPATCHED: The order has been dispatched.
+ * - DELIVERED: The order has been delivered.
+ * - CANCELLED: The order has been cancelled.
+ * - NONE: The order has no status. Users should NEVER see this status!
  */
 public enum OrderStatus {
 	//New order - just created
@@ -28,12 +37,25 @@ public enum OrderStatus {
     public int displayMessage;
     public int displayColour;
 
+    /**
+     * Constructs an OrderStatus enum with the given status, display message, and display colour.
+     *
+     * @param status The status of the order
+     * @param displayMessage The message to display for the order status
+     * @param colour The colour to display for the order status
+     */
     private OrderStatus(int status, int displayMessage, int colour){
         this.status = status;
         this.displayMessage = displayMessage;
         this.displayColour = colour;
     }
 
+    /**
+     * Converts an integer value to an OrderStatus enum value. Will return NONE if OrderStatus is not found for a given value of s.
+     *
+     * @param s The integer value to convert.
+     * @return The corresponding OrderStatus enum value.
+     */
     public static OrderStatus fromInt(int s){
         switch(s){
             case -2:

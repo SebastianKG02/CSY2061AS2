@@ -19,6 +19,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.time.LocalDateTime;
 
+/**
+ * A fragment that displays a registration form for a user to fill out.
+ * Contains fields for username, full name, password, password confirmation, and address.
+ * Also contains buttons for registering, clearing the form, and cancelling the registration process.
+ */
 public class RegisterFragment extends Fragment {
     private View masterLayout;
     private Button registerButton;
@@ -30,10 +35,21 @@ public class RegisterFragment extends Fragment {
     private EditText passwordConfirm;
     private EditText addressEnter;
 
+    /**
+     * Constructs a new RegisterFragment object.
+     * This constructor initializes the fragment with the layout resource ID of R.layout.fragment_register.
+     */
     public RegisterFragment() {
         super(R.layout.fragment_register);
     }
 
+    /**
+     * Called when the view is created. Initializes the buttons and text fields and sets up their click listeners.
+     * Handle registration logic (password validation, adding new user to database).
+     * 
+     * @param view The view that was created
+     * @param savedInstanceState The saved instance state of the fragment
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -48,6 +64,11 @@ public class RegisterFragment extends Fragment {
         passwordConfirm = (EditText) masterLayout.findViewById(R.id.registerPasswordConfirm);
         addressEnter = (EditText) masterLayout.findViewById(R.id.registerAddressEnter);
 
+        /*
+         * Set an OnClickListener on the registerButton. When clicked, retrieve the user's input from the
+         * EditText fields and validate the input. If the input is valid, create a new User object and add it
+         * to the database. If the input is invalid, display an appropriate error message using a Snackbar.
+         */
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +79,9 @@ public class RegisterFragment extends Fragment {
                 String passwordConf = passwordConfirm.getText().toString();
                 String address = addressEnter.getText().toString();
 
+                //Check if fields are empty
                 if(!username.isEmpty() && !fullName.isEmpty() && !password.isEmpty() && password.equals(passwordConf) && !address.isEmpty()){
+                    //Password validation
                     boolean hasUppercase = false, hasLowercase = false, hasNumber = false;
 
                     if(password.length() > User.passwordMinChars) {
@@ -81,7 +104,8 @@ public class RegisterFragment extends Fragment {
                                 break;
                             }
                         }
-
+                        
+                        //If password is valid, register user, add them to the database and navigate to the login fragment.
                         if (hasUppercase && hasLowercase && hasNumber) {
                             User newUser = new User(userHelper.getUsers().size(), fullName, username, LocalDateTime.now(), LocalDateTime.now(), password, address);
                             if (userHelper.addUser(newUser)){
@@ -119,6 +143,7 @@ public class RegisterFragment extends Fragment {
             }
         });
 
+        //Clear all fields
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,6 +157,7 @@ public class RegisterFragment extends Fragment {
             }
         });
 
+        //Go back to login fragment
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,6 +166,14 @@ public class RegisterFragment extends Fragment {
         });
     }
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

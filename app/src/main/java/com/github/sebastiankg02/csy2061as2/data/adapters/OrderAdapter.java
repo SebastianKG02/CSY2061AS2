@@ -28,15 +28,36 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
+/**
+ * An adapter for displaying a list of orders in a RecyclerView.
+ *
+ * orders An ArrayList of Order objects to display
+ * context The context of the activity or fragment using this adapter
+ */
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
     private Context context;
     public ArrayList<Order> orders;
 
+    /**
+     * Constructs an OrderAdapter object with the given list of orders and context.
+     *
+     * @param orders The list of orders to be displayed in the adapter
+     * @param c The context in which the adapter is being used
+     */
     public OrderAdapter(ArrayList<Order> orders, Context c){
         this.context = c;
         this.orders = orders;
     }
 
+    /**
+     * Called when RecyclerView needs a new {@link ViewHolder} of the given type to represent
+     * an item.
+     *
+     * @param parent The ViewGroup into which the new View will be added after it is bound to
+     *               an adapter position.
+     * @param viewType The view type of the new View.
+     * @return A new ViewHolder that holds a View of the given view type.
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,6 +67,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         return holder;
     }
 
+    /**
+     * Binds the data of an order to a ViewHolder, updating the products, requesting an order status update,
+     * and setting the user information. Also sets the border color of the item layout based on the order status.
+     *
+     * @param holder The ViewHolder to bind the data to
+     * @param position The position of the order in the list
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Order currentOrder = orders.get(position);
@@ -57,6 +85,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         GradientDrawable itemBorder = (GradientDrawable) holder.itemLayout.getBackground().mutate();
         itemBorder.setStroke(ViewOrderListFragment.dpToPxBorder,context.getColor(currentOrder.getStatus().displayColour));
 
+        //Set the text for each field in the order view holder based on the current order.
         holder.orderNumber.setText("Order #" + currentOrder.getUserID() + currentUser.fullName.substring(0, 3).toUpperCase() + "-" + currentOrder.getId());
         holder.orderStatus.setText(currentOrder.getStatus().displayMessage);
         holder.orderStatus.setTextColor(context.getColor(currentOrder.getStatus().displayColour));
@@ -66,6 +95,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         holder.orderItems.setText(currentOrder.getOrderProductCount() + " total items in order.");
         holder.orderTotalPrice.setText(currentOrder.calculateTotalPrice(context));
 
+        /**
+         * Set an OnClickListener on the item layout of the holder. When clicked, a PopupMenu is displayed
+         * with options that vary depending on the status of the current order. The options include viewing
+         * the order contents, starting a return, cancelling the order, and removing the order.
+         */
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,10 +126,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch(menuItem.getItemId()) {
+                            /**
+                             * Navigates to the ViewSpecificOrderFragment to view the contents of the current order.
+                             * Sets the current order to the working order in the ViewSpecificOrderFragment.
+                             */
                             case R.id.viewOrderContentsOption:
                                 ViewSpecificOrderFragment.workingOrder = currentOrder;
                                 Navigation.findNavController(view).navigate(R.id.action_viewOrderListFragment_to_viewSpecificOrderFragment);
                                 break;
+                            /**
+                             * Displays an alert dialog to confirm the user's intention to start a return for the current order.
+                             */
                             case R.id.startReturnOption:
                                 AlertDialog returnDialog = new AlertDialog.Builder(context)
                                         .setTitle(R.string.return_title)
@@ -117,6 +158,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                                         }).create();
                                 returnDialog.show();
                                 break;
+                            /**
+                             * Displays an alert dialog to confirm the cancellation of an order. If the user confirms the cancellation,
+                             * the order status is updated to cancelled and the adapter is notified of the change.
+                             */
                             case R.id.cancelOrderOption:
                                 AlertDialog cancelDialog = new AlertDialog.Builder(context)
                                         .setTitle(R.string.cancel_title)
@@ -138,6 +183,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                                         }).create();
                                 cancelDialog.show();
                                 break;
+                            /**
+                             * Displays an alert dialog to confirm the removal of an order. If the user confirms the removal,
+                             * the order is deleted from the context and the list of orders is updated.
+                             */
                             case R.id.removeOrderOption:
                                 AlertDialog removeDialog = new AlertDialog.Builder(context)
                                         .setTitle(R.string.menu_remove_order)
@@ -168,11 +217,20 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         });
     }
 
+    /**
+     * Returns the number of items in the list of orders.
+     *
+     * @return The number of orders in the list.
+     */
     @Override
     public int getItemCount() {
         return orders.size();
     }
 
+    /*
+     * Contains references to the various views that make up an order item, such as the order number,
+     * status, created date, delivery method, due date, items in the order, and total price.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout itemLayout;
         public TextView orderNumber;
@@ -183,6 +241,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         public TextView orderItems;
         public TextView orderTotalPrice;
 
+        /**
+         * Constructs a ViewHolder object for an Order item object in the RecyclerView.
+         *
+         * @param itemView The view representing the order item
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
