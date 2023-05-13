@@ -109,6 +109,13 @@ public class ViewSpecificProductFragment extends Fragment {
                 if(hasStockBasket){
                     Basket.init();
                     Basket.addToBasket(ViewProductListFragment.currentProductViewing, Integer.valueOf(quantityText.getText().toString()));
+                    Snackbar.make(v, "Added " + Integer.valueOf(quantityText.getText().toString()) + " products to basket.", Snackbar.LENGTH_SHORT)
+                            .setAction(R.string.basket_title, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    MainActivity.globalNavigation.navigate(R.id.action_viewSpecificProductFragment_to_basketFragment);
+                                }
+                            }).show();
                 }
             }
         });

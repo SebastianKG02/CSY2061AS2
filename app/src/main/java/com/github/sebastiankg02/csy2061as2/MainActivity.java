@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         //Set toolbar up
         NavHostFragment navFrag = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host);
         globalNavigation = navFrag.getNavController();
-        drawer = (DrawerLayout) findViewById(R.id.drawer);
+        drawer = findViewById(R.id.drawer);
         appBarConfig = new AppBarConfiguration.Builder(globalNavigation.getGraph()).setOpenableLayout(drawer).build();
 
         navView = findViewById(R.id.nav_view);
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         NavigationUI.setupActionBarWithNavController(this, globalNavigation, appBarConfig);
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         navView.inflateMenu(R.menu.drawer);
                         currentLoggedInUser = u;
                         globalNavigation.navigate(R.id.action_loginFragment_to_basketFragment);
-                        TextView header = (TextView)navView.getHeaderView(0).findViewById(R.id.userDrawerNameSection);
+                        TextView header = navView.getHeaderView(0).findViewById(R.id.userDrawerNameSection);
                         header.setText("Welcome, " + u.fullName);
                     }
                 }
@@ -167,15 +167,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case R.id.bugReportOption:
-                Snackbar.make(navView, "BUG REPORT OPTION TBC.", Snackbar.LENGTH_SHORT).show();
-                break;
             case R.id.exitOption:
                 //exit app
                 this.finishAffinity();
                 break;
             case R.id.getSupportOption:
-                Snackbar.make(navView, "GET SUPPORT REPORT OPTION TBC.", Snackbar.LENGTH_SHORT).show();
+                AlertDialog supportDialog = new AlertDialog.Builder(this)
+                        .setTitle(R.string.menu_support)
+                        .setMessage(R.string.support_description)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        }).create();
+                supportDialog.show();
                 break;
             case R.id.logoutOption:
                 /*
@@ -185,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                  * to the login fragment.
                  */
                 if(hasLoggedIn) {
-                    AlertDialog logoutDialog = new AlertDialog.Builder(this, R.style.PauseDialog)
+                    AlertDialog logoutDialog = new AlertDialog.Builder(this)
                             .setTitle(R.string.logout)
                             .setMessage(R.string.logout_message)
                             .setPositiveButton(R.string.logout, new DialogInterface.OnClickListener() {
@@ -211,9 +217,6 @@ public class MainActivity extends AppCompatActivity {
                                     dialog.cancel();
                                 }
                             }).show();
-
-                    logoutDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.white));
-                    logoutDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.white));
                 } else {
                     Snackbar.make(navView, R.string.logout_no_user, Snackbar.LENGTH_SHORT).show();
                 }

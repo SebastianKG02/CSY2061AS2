@@ -141,4 +141,13 @@
     <string name="product_delete_success">Product successfully deleted.</string>
     <string name="product_delete_error">Error while deleting product. Please try again later.</string>
     <string name="migrate">Migrate</string>
+    <string name="bug_report_title">Bug Report Category</string>
+    <string name="bug_report_detail">Bug Report Details</string>
+    <string name="submit">Submit Report</string>
+    <string name="bug_report_info">Please submit details of your bug report below. A staff member will be in contact within 7 working days with an update.</string>
+    <string name="bug_report_success">Bug report successfully submitted. Thank you!</string>
+    <string name="bug_report_error">Error while submitting bug report. Please try again later!</string>
+    <string name="bug_report_empty">Bug report title and description cannot be empty! Please fill these fields in.</string>
+    <string name="support_description">Please contact <b>support@kwesijames.shop</b> for any support queries.\n\nPlease ensure the email is sent from the same email address as your registered account so that we can ensure speedy help.</string>
+    <string name="ok">Ok</string>
 </resources>
