@@ -84,12 +84,12 @@ public class RegisterFragment extends Fragment {
                     //Password validation
                     boolean hasUppercase = false, hasLowercase = false, hasNumber = false;
 
-                    if(password.length() > User.passwordMinChars) {
+                    if(password.length() >= User.passwordMinChars) {
                         for (char c : User.passwordChars) {
                             if (password.contains("" + c)) {
                                 hasLowercase = true;
                             }
-                            if (password.toUpperCase().contains("" + String.valueOf(c).toUpperCase())) {
+                            if (password.contains("" + String.valueOf(c).toUpperCase())) {
                                 hasUppercase = true;
                             }
 

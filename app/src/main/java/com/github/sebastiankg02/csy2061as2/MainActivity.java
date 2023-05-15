@@ -221,9 +221,6 @@ public class MainActivity extends AppCompatActivity {
                     Snackbar.make(navView, R.string.logout_no_user, Snackbar.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.forgotPasswordFragment:
-                Snackbar.make(navView, "SHOULD GO TO FORGOT PASSWORD & CLOSE", Snackbar.LENGTH_SHORT).show();
-                break;
         }
 
         //Close drawer if open

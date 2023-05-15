@@ -515,7 +515,7 @@ public class Product {
             cv.put("LIST_PRICE", newProduct.listPrice);
             cv.put("RETAIL_PRICE", newProduct.retailPrice);
             cv.put("CREATED", User.formatter.format(newProduct.created));
-            cv.put("UPDATED", User.formatter.format(newProduct.updated));
+            cv.put("UPDATED", User.formatter.format(LocalDateTime.now()));
             cv.put("STOCK", newProduct.stockLevel);
 
             db.update("product", cv, "ID = ?", new String[]{String.valueOf(newProduct.id)});

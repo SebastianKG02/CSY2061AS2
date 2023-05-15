@@ -39,7 +39,7 @@ public class ProductChangePriceDialog {
         listPrice.setText(String.valueOf(toChange.getListPrice()));
         retailPrice.setText(String.valueOf(toChange.getRetailPrice()));
 
-        output.setView(alertView).setPositiveButton(R.string.admin_product_change_name, new DialogInterface.OnClickListener() {
+        output.setView(alertView).setPositiveButton(R.string.admin_product_change_price, new DialogInterface.OnClickListener() {
             /**
              * Handles the positive button click event for the dialog box. If the price, list price, and retail price fields are not empty,
              * the product's price, list price, and retail price are updated with the values entered in the fields. The updated

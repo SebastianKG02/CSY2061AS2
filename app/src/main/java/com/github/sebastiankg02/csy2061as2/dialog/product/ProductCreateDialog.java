@@ -89,7 +89,7 @@ public class ProductCreateDialog {
             }
         });
 
-        output.setView(alertView).setPositiveButton(R.string.admin_product_change_name, new DialogInterface.OnClickListener() {
+        output.setView(alertView).setPositiveButton(R.string.product_create, new DialogInterface.OnClickListener() {
             /**
              * Handles the positive click event for the "Create Product" button in the "Add Product" dialog.
              * Validates the input fields and creates a new product with the provided information.

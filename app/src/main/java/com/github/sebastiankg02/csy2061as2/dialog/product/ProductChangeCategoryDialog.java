@@ -55,7 +55,7 @@ public class ProductChangeCategoryDialog {
         spinner.setAdapter(spinnerAdapter);
         spinner.setSelection(thisCategory);
 
-        output.setView(alertView).setPositiveButton(R.string.admin_product_change_name, new DialogInterface.OnClickListener() {
+        output.setView(alertView).setPositiveButton(R.string.admin_product_change_category, new DialogInterface.OnClickListener() {
             /**
              * Handles the positive button click event for the dialog box. Updates the category of the product to the selected value
              * from the spinner, updates the product in the database, removes the old product from the adapter, and
